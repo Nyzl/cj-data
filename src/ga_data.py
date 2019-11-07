@@ -13,7 +13,7 @@ import logging
 import settings
 
 parentPath = settings.parentPath
-KEY_FILE_LOCATION = os.path.join(parentPath,"creds","backlogger_bq.json")
+KEY_FILE_LOCATION = os.path.join(parentPath,"creds","datapipeline.json")
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
 analytics = build('analyticsreporting', 'v4', credentials=credentials)

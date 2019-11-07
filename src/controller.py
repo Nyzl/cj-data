@@ -1,6 +1,10 @@
 import time, logging
 from retrying import retry
 from settings import report
+from flask import Flask
+
+app = Flask(__name__)
+port = os.environ.get('PORT') 
 
 
 #create all the report objects
@@ -26,22 +30,22 @@ def retry(fn):
 
 
 
-def get():
+def get(r):
+    retry(r.get_data())
+
+
+def send(r):
+    retry(r.send_data())
+
+@app.route('/')
+def go():
     for r in reports:
-        retry(r.get_data())
-
-
-def send():
-    for r in reports:
-        retry(r.send_data())
-
-
-get()
-send()
+        get(r)
+        send(r)
 
 
 
 
 
 if __name__ == '__main__':
-    print ("did you mean to do that?")
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

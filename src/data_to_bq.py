@@ -22,7 +22,7 @@ def send_data_bq(data, name):
     frame = data
     length = frame.shape[0]
 
-    KEY_FILE_LOCATION = os.path.join(parentPath,"creds","backlogger_bq.json")
+    KEY_FILE_LOCATION = os.path.join(parentPath,"creds","datapipeline.json")
     credentials = service_account.Credentials.from_service_account_file(KEY_FILE_LOCATION)
 
     strCols = frame.select_dtypes(include = ['object'])
