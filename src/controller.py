@@ -1,7 +1,9 @@
-import time, logging
+import time, logging, os
 from retrying import retry
-from settings import report
 from flask import Flask
+
+from settings import report
+import epi_report, ga_data
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -18,7 +20,13 @@ reports = [
            report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
 ]
 
+#take the report source and map it to a function
+sources = {
+    "epi": epi_report.epi_pages_report,
+    "ga":ga_data.get_ga_report
+}
 
+#define key functions
 @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000,stop_max_attempt_number=10)
 def retry(fn):
     try:
@@ -29,19 +37,22 @@ def retry(fn):
         raise err
 
 
-
 def get(r):
+    r.source_fn = sources[r.source]
     retry(r.get_data())
 
 
 def send(r):
     retry(r.send_data())
 
+
+#the uri to set things running
 @app.route('/')
 def go():
     for r in reports:
         get(r)
         send(r)
+    return ("all done")
 
 
 

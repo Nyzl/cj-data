@@ -46,36 +46,28 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+## The code
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Setting.py defines a report object wit the following properties:
 ```
-Give an example
+name
+data
+source
+site
+source_args
+dest
+status
+source_fn
+```
+And the following methods:
+```
+get_data()
+send_data()
+clean_data()
+save_data()
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
+Report object have a status:
 
 
 ## Authors

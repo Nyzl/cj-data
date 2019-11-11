@@ -1,12 +1,13 @@
-import requests
-import pandas as pd
+#import requests
+#import pandas as pd
 import os
-from io import StringIO
+#from io import StringIO
 import sys
 import time
 from pathlib import Path
 from google.oauth2 import service_account
 import pandas_gbq
+
 import settings
 
 gcp_project = os.environ.get('gcp_project')

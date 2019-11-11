@@ -2,7 +2,7 @@
 
 from io import StringIO
 import pandas as pd
-import csv,requests,os,logging
+import csv,requests,os,logging, sys
 from datetime import datetime
 from pathlib import Path
 import settings
@@ -22,7 +22,7 @@ def epi_pages_report(site, *args):
         "advisernet" : os.environ.get('advisernet_epi')
     }
 
-    url = urls["public"]
+    url = urls[site]
     
     frame = makeFrame(url)
     frame.to_pickle(os.path.join(parentPath,"store",site+".pkl"))
@@ -68,4 +68,6 @@ def makeFrame(link):
         return frame
 
 if __name__ == '__main__':
-    epi_pages_report()
+    site = sys.argv[1]
+    print(site)
+    epi_pages_report(site)
