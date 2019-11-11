@@ -8,11 +8,11 @@ from pathlib import Path
 from google.oauth2 import service_account
 import pandas_gbq
 
-import settings
+import report
 
 gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset') 
-parentPath = settings.parentPath
+parentPath = report.parentPath
 
 
 # get file, upload file, delete file

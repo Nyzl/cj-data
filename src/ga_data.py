@@ -1,18 +1,13 @@
-# Pulls data from Analytics API and uploads it to BigQuery.
-
-#TODO if no arguments are passed, then request an input from the user
-
+# Pulls data from Analytics API
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import pandas_gbq
 from pathlib import Path
-import os
-import sys
-import logging
-import settings
+import os, sys, logging
+import report
 
-parentPath = settings.parentPath
+parentPath = report.parentPath
 KEY_FILE_LOCATION = os.path.join(parentPath,"creds","datapipeline.json")
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
@@ -83,34 +78,11 @@ def get_ga_report(view, reporttype):
     cols = cols_dict[reporttype]
     df = pandafy(response)
     df2 = df.rename(index=str, columns=cols)
-    df2.to_pickle(os.path.join(parentPath,"store",view+reporttype+".pkl"))
 
     return df2
 
 ########################################
 
-
-"""     # Upload to BigQuery
-    args = sys.argv[1] + sys.argv[2]
-
-    report_name_dict = {
-        'AdvisernetRating':'Backlogger.AN_Content_Rating',
-        'PublicRating':'Backlogger.Public_Content_Rating',
-        'AdvisernetSize':'Backlogger.AN_Content_Size',
-        'PublicSize':'Backlogger.Public_Content_Size'
-        }
-
-    report_name = report_name_dict[args]
-
-    df2.to_gbq(report_name, 'hardy-album-169409',
-            if_exists = 'replace', private_key=KEY_FILE_LOCATION)
-
-    return 1 """
-
-
-
-
-#########################################
 
 def pandafy(response):
   list = []

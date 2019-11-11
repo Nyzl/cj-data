@@ -5,7 +5,6 @@ import pandas as pd
 import csv,requests,os,logging, sys
 from datetime import datetime
 from pathlib import Path
-import settings
 
 username = os.environ.get('epiname')
 password = os.environ.get('epipass')
@@ -25,7 +24,7 @@ def epi_pages_report(site, *args):
     url = urls[site]
     
     frame = makeFrame(url)
-    frame.to_pickle(os.path.join(parentPath,"store",site+".pkl"))
+    #frame.to_pickle(os.path.join(parentPath,"store",site+".pkl"))
     return frame
 
 

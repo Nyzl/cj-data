@@ -1,4 +1,6 @@
 import os, dotenv
+import pandas as pd
+import pickle
 
 path1 = os.path.dirname(os.path.realpath(__file__))
 parentPath = os.path.dirname(path1)
@@ -6,7 +8,7 @@ dotenv.load_dotenv(os.path.join(parentPath, '.env'))
 
 import data_to_bq
 
-class report:
+class Report:
     def __init__(self, name=None, data=None, source=None, site=None, source_args=None, dest=None, status=None, source_fn=None):
         self.name = name
         self.data = data
@@ -24,7 +26,7 @@ class report:
         except Exception as err:
             self.status = err
         
-        print(self.status)
+        #print(self.status)
         return "all done"
         
     
@@ -35,18 +37,25 @@ class report:
         except Exception as err:
             self.status = err
 
-        print(self.status)
+        #print(self.status)
         return "sent all the data"
+
 
     def clean_data(self):
         x = "when i'm cleaning data"
+        frame = pd.DataFrame(self.data)
 
-        #strCols = frame.select_dtypes(include = ['object'])
-        #frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
-        #frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
+        strCols = frame.select_dtypes(include = ['object'])
+        frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
+        frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
+
+        self.data = frame
+
 
     def save_data(self):
         if self.status == 'got':
+            with open(parentPath+"/store/"+self.name+".pkl", 'wb') as file:
+                pickle.dump(self, file)
             print("i'm going to save this data")
         else:
             print("i'm not sure i got the data")

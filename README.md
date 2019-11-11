@@ -8,11 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You will need Docker installed.
 
-```
-Give examples
-```
 
 ### Installing
 
@@ -35,16 +32,15 @@ export key_file_name=xxxx
 export public_epi=xxxx
 export advisernet_epi=xxxx
 ```
+Build the Docker image with: 
+```docker build -t pipeline .```
+
+Run the docker container, this will start Flask:
+```docker run pipeline```
+
+Flack is listening on port 8080
 
 
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## The code
 

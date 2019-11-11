@@ -2,7 +2,7 @@ import time, logging, os
 from retrying import retry
 from flask import Flask
 
-from settings import report
+from report import Report
 import epi_report, ga_data
 
 app = Flask(__name__)
@@ -12,12 +12,12 @@ port = os.environ.get('PORT')
 #create all the report objects
 
 reports = [
-           report(name="epi_public", source="epi", dest="", site="public"),
-           report(name="epi_adviser", source="epi", dest="", site="advisernet"),
-           report(name="ga_public_rating", source="ga", dest="", site="public", source_args="rating"),
-           report(name="ga_public_size", source="ga", dest="", site="public", source_args="size"),
-           report(name="ga_adviser_rating", source="ga", dest="", site="advisernet", source_args="rating"),
-           report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
+           Report(name="epi_public", source="epi", dest="", site="public"),
+           Report(name="epi_adviser", source="epi", dest="", site="advisernet"),
+           Report(name="ga_public_rating", source="ga", dest="", site="public", source_args="rating"),
+           Report(name="ga_public_size", source="ga", dest="", site="public", source_args="size"),
+           Report(name="ga_adviser_rating", source="ga", dest="", site="advisernet", source_args="rating"),
+           Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
 ]
 
 #take the report source and map it to a function
@@ -51,7 +51,9 @@ def send(r):
 def go():
     for r in reports:
         get(r)
-        send(r)
+        r.clean_data()
+        r.save_data()
+        #send(r)
     return ("all done")
 
 
