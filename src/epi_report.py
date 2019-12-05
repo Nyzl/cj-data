@@ -6,8 +6,8 @@ import csv,requests,os,logging, sys
 from datetime import datetime
 from pathlib import Path
 
-username = os.environ.get('epiname')
-password = os.environ.get('epipass')
+username = "y"#os.environ.get('epiname')
+password = "x"#os.environ.get('epipass')
 details = "username=" + username + "&password=" + password
 edit_login = "https://edit.citizensadvice.org.uk/login/?" + details
 

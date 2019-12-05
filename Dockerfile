@@ -22,4 +22,5 @@ RUN chmod 444 requirements.txt
 
 ENV PORT 8080
 
-CMD bin/bash
+#CMD bin/bash
+CMD python src/controller.py

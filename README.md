@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 You will need Docker installed.
 
 
-### Installing
+### Installing locally
 
 A step by step series of examples that tell you how to get a development env running
 
@@ -38,9 +38,15 @@ Build the Docker image with:
 Run the docker container, this will start Flask:
 ```docker run pipeline```
 
-Flack is listening on port 8080
+Flask is listening on port 8080
 
+### Deployment to Google Cloud Run
 
+```gcloud builds submit --tag gcr.io/customerjourney-214813/testing```
+
+```gcloud run deploy SERVICE --image gcr.io/PROJECT-ID/IMAGE```
+
+```gcloud beta run deploy --image gcr.io/customerjourney-214813/testing --service-account cj-datapipeline@customerjourney-214813.iam.gserviceaccount.com```
 
 ## The code
 

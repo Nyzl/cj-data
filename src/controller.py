@@ -4,6 +4,7 @@ from flask import Flask
 
 from report import Report
 import epi_report, ga_data
+import auth
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -56,6 +57,9 @@ def go():
         #send(r)
     return ("all done")
 
+@app.route('/test')
+def test():
+    return "testing?"
 
 
 
