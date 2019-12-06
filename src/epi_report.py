@@ -1,34 +1,45 @@
 #get the epi pages reports and save as pickle files
 
-from io import StringIO
 import pandas as pd
-import csv,requests,os,logging, sys
+import csv,requests,os,sys,json
+from io import StringIO
 from datetime import datetime
 from pathlib import Path
+from google.cloud import storage
 
-username = "y"#os.environ.get('epiname')
-password = "x"#os.environ.get('epipass')
-details = "username=" + username + "&password=" + password
-edit_login = "https://edit.citizensadvice.org.uk/login/?" + details
+
+def auth():
+    bucket_name = "customerjourney_service"
+    source_blob_name= "epi.json"
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(source_blob_name)
+    auth_string = blob.download_as_string().decode('utf8')
+    auth_json = json.loads(auth_string)
+
+    username = auth_json['user_name']
+    password = auth_json['password']
+    details = "username=" + username + "&password=" + password
+    edit_login = auth_json['auth_uri'] + details
+
+    return edit_login
 
 
 def epi_pages_report(site, *args):
-    path1 = os.path.dirname(os.path.abspath(__file__))
-    parentPath = os.path.dirname(path1)
     
     urls = {
         "public" : os.environ.get('public_epi'),
         "advisernet" : os.environ.get('advisernet_epi')
     }
 
-    url = urls[site]
-    
+    url = urls[site]    
     frame = makeFrame(url)
-    #frame.to_pickle(os.path.join(parentPath,"store",site+".pkl"))
+
     return frame
 
 
 def makeFrame(link):
+    edit_login = auth()
     now = datetime.now()
     today = datetime.date(now)
     site = 'https://www.citizensadvice.org.uk'
@@ -68,5 +79,4 @@ def makeFrame(link):
 
 if __name__ == '__main__':
     site = sys.argv[1]
-    print(site)
     epi_pages_report(site)

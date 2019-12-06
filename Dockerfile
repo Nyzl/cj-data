@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 
 LABEL version="1.0"
 LABEL maintainer="Ian Ansell"
@@ -10,9 +10,9 @@ LABEL maintainer="Ian Ansell"
 
 RUN pip install --upgrade pip
 
-COPY . /cjfeedback
+COPY . /cj-data
 
-WORKDIR /cjfeedback
+WORKDIR /cj-data
 
 RUN pip install --no-cache-dir -r requirements.txt
 

@@ -4,7 +4,8 @@ from flask import Flask
 
 from report import Report
 import epi_report, ga_data
-import auth
+
+import testing
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -29,7 +30,7 @@ sources = {
 
 #define key functions
 @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000,stop_max_attempt_number=10)
-def retry(fn):
+def retry_wrap(fn):
     try:
         fn
 
@@ -40,11 +41,11 @@ def retry(fn):
 
 def get(r):
     r.source_fn = sources[r.source]
-    retry(r.get_data())
+    retry_wrap(r.get_data())
 
 
 def send(r):
-    retry(r.send_data())
+    retry_wrap(r.send_data())
 
 
 #the uri to set things running
@@ -55,11 +56,11 @@ def go():
         r.clean_data()
         r.save_data()
         #send(r)
-    return ("all done")
+    return "all done"
 
 @app.route('/test')
 def test():
-    return "testing?"
+    return testing.test2()
 
 
 
