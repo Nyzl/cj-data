@@ -1,32 +1,12 @@
-#get the epi pages reports and save as pickle files
-
 import pandas as pd
 import csv,requests,os,sys,json
 from io import StringIO
 from datetime import datetime
 from pathlib import Path
 from google.cloud import storage
+import auth
 
-
-def auth():
-    bucket_name = "customerjourney_service"
-    source_blob_name= "epi.json"
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(source_blob_name)
-    auth_string = blob.download_as_string().decode('utf8')
-    auth_json = json.loads(auth_string)
-
-    username = auth_json['user_name']
-    password = auth_json['password']
-    details = "username=" + username + "&password=" + password
-    edit_login = auth_json['auth_uri'] + details
-
-    return edit_login
-
-
-def epi_pages_report(site, *args):
-    
+def epi_pages_report(site, *args):    
     urls = {
         "public" : os.environ.get('public_epi'),
         "advisernet" : os.environ.get('advisernet_epi')
@@ -34,12 +14,15 @@ def epi_pages_report(site, *args):
 
     url = urls[site]    
     frame = makeFrame(url)
-
     return frame
 
 
 def makeFrame(link):
-    edit_login = auth()
+    auth_json = auth.auth("epi")
+    username = auth_json['user_name']
+    password = auth_json['password']
+    details = "username=" + username + "&password=" + password
+    edit_login = auth_json['auth_uri'] + details
     now = datetime.now()
     today = datetime.date(now)
     site = 'https://www.citizensadvice.org.uk'

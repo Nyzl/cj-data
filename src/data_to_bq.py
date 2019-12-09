@@ -1,13 +1,9 @@
-#import requests
-#import pandas as pd
 import os
-#from io import StringIO
 import sys
 import time
 from pathlib import Path
 from google.oauth2 import service_account
 import pandas_gbq
-
 import report
 
 gcp_project = os.environ.get('gcp_project')
@@ -15,10 +11,8 @@ bq_dataset = os.environ.get('bq_dataset')
 parentPath = report.parentPath
 
 
-# get file, upload file, delete file
 def send_data_bq(data, name):
-    
-    #file = os.path.join(parentPath,"store",name + ".pkl")
+    #change to using client()
 
     frame = data
     length = frame.shape[0]

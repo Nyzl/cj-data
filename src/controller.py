@@ -1,10 +1,8 @@
-import time, logging, os
+import logging, os
 from retrying import retry
 from flask import Flask
-
 from report import Report
 import epi_report, ga_data
-
 import testing
 
 app = Flask(__name__)
