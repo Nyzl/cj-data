@@ -46,6 +46,7 @@ def send(r):
     retry_wrap(r.send_data())
 
 
+
 #the uri to set things running
 @app.route('/')
 def go():
@@ -53,14 +54,12 @@ def go():
         get(r)
         r.clean_data()
         r.save_data()
-        #send(r)
+        retry_wrap(r.send_data())
     return "all done"
 
 @app.route('/test')
 def test():
     return testing.test2()
-
-
 
 
 if __name__ == '__main__':

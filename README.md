@@ -42,11 +42,11 @@ Flask is listening on port 8080
 
 ### Deployment to Google Cloud Run
 
-```gcloud builds submit --tag gcr.io/customerjourney-214813/testing```
+```gcloud builds submit --tag gcr.io/customerjourney-214813/cj-data-test```
 
 ```gcloud run deploy SERVICE --image gcr.io/PROJECT-ID/IMAGE```
 
-```gcloud beta run deploy --image gcr.io/customerjourney-214813/testing --service-account cj-datapipeline@customerjourney-214813.iam.gserviceaccount.com```
+```gcloud beta run deploy --image gcr.io/customerjourney-214813/cj-data-test --service-account cj-datapipeline@customerjourney-214813.iam.gserviceaccount.com```
 
 ## The code
 

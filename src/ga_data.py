@@ -2,16 +2,15 @@
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
-import pandas_gbq
-from pathlib import Path
 import os, sys, logging
 import report
+import auth
+
 
 try:
-    parentPath = report.parentPath
-    KEY_FILE_LOCATION = os.path.join(parentPath,"creds","datapipeline.json")
+    key_file = auth.auth("cj_data")
     SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
 
 except:
@@ -73,6 +72,8 @@ def get_ga_report(view, reporttype):
     }
 
     report_body = REPORT_TYPE[reporttype]
+
+
 
     response =  analytics.reports().batchGet(
         body= report_body

@@ -27,7 +27,6 @@ class Report:
             self.status = err
         
         #print(self.status)
-        return "all done"
         
     
     def send_data(self):
@@ -36,15 +35,14 @@ class Report:
             self.status = "sent"
         except Exception as err:
             self.status = err
+            print(err)
 
         #print(self.status)
         return "sent all the data"
 
 
     def clean_data(self):
-        x = "when i'm cleaning data"
         frame = pd.DataFrame(self.data)
-
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
         frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))

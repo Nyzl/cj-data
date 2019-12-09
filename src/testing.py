@@ -1,32 +1,31 @@
-from google.cloud import storage
-from pathlib import Path
-import os,json
+import pandas as pd
+from google.cloud import bigquery
+
+raw_data = {'first_name': ['Stevil', 'Molly', 'Tina', 'Jake', 'Amy'], 
+        'last_name': ['Miller', 'Jacobson', 'Ali', 'Milner', 'Cooze'], 
+        'age': [42, 52, 36, 24, 73], 
+        'preTestScore': [4, 24, 31, 2, 3],
+        'postTestScore': [25, 94, 57, 62, 70]}
+frame = pd.DataFrame(raw_data, columns = ['first_name', 'last_name', 'age', 'preTestScore', 'postTestScore'])
 
 
-path1 = os.path.dirname(os.path.realpath(__file__))
-parentPath = os.path.dirname(path1)
+def test2(frame):
+    client = bigquery.Client()
+    table_id = "customerjourney-214813.IanTest.testytest"
 
-def test2():
+    strCols = frame.select_dtypes(include = ['object'])
+    frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
+    frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
 
-    path1 = os.path.dirname(os.path.realpath(__file__))
-    parentPath = os.path.dirname(path1)
-    destination_file_name = os.path.join(parentPath,"store","test.json")
+    job = client.load_table_from_dataframe(
+        frame, table_id)
 
-    bucket_name = "customerjourney_service"
-    source_blob_name= "epi.json"
+    job.result()
 
 
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(source_blob_name)
 
-    x = blob.download_as_string().decode('utf8')
 
-    y = json.loads(x)
 
-    print(y['user_name'])
-
-    return str(x)
 
 if __name__ == '__main__':
-    test2()
+    pass

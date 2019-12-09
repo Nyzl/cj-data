@@ -1,47 +1,28 @@
-import os
-import sys
-import time
-from pathlib import Path
-from google.oauth2 import service_account
-import pandas_gbq
+import os,sys
 import report
+from google.cloud import bigquery
 
 gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset') 
 parentPath = report.parentPath
 
 
-def send_data_bq(data, name):
-    #change to using client()
+def send_data_bq(frame, name):
 
-    frame = data
     length = frame.shape[0]
+    table_id = ".".join([gcp_project,bq_dataset,name])
 
-    KEY_FILE_LOCATION = os.path.join(parentPath,"creds","datapipeline.json")
-    credentials = service_account.Credentials.from_service_account_file(KEY_FILE_LOCATION)
+    client = bigquery.Client()
 
     strCols = frame.select_dtypes(include = ['object'])
+    frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
     frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
 
-    i = 0
-    j = 5000
+    job = client.load_table_from_dataframe(
+        frame, table_id)
 
-    while i < length:
-        out = frame.iloc[i:j]
-        out.to_gbq(bq_dataset+name, gcp_project,
-                   if_exists = 'append', private_key=KEY_FILE_LOCATION)
+    job.result()
 
-        time.sleep(60)
-
-        i = j
-        j = j+5000
-
-    #os.remove(file)
-
-    return 1
-
-
-    #frame will need cleaning
 if __name__ == '__main__':
     name = sys.argv[1]
     send_data(data, name)
