@@ -1,3 +1,6 @@
+make sure GOOGLE_APPLICATION_CREDENTIALS env set for dev testing
+epi_report still used env vars for public and advisernet 
+
 # Content prioritisation data pipeline
 
 This project collects data from various sources and sends them to Big Query
@@ -36,7 +39,7 @@ Build the Docker image with:
 ```docker build -t pipeline .```
 
 Run the docker container, this will start Flask:
-```docker run pipeline```
+```docker run -p 8080:8080 pipeline```
 
 Flask is listening on port 8080
 
