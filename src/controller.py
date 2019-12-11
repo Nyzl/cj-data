@@ -1,6 +1,6 @@
 import logging, os
 from retrying import retry
-from flask import Flask
+from flask import Flask, request
 from report import Report
 import epi_report, ga_data
 import testing
@@ -10,14 +10,15 @@ port = os.environ.get('PORT')
 
 #create all the report objects
 
-reports = [
-           Report(name="epi_public", source="epi", dest="", site="public"),
-           Report(name="epi_adviser", source="epi", dest="", site="advisernet"),
-           Report(name="ga_public_rating", source="ga", dest="", site="public", source_args="rating"),
-           Report(name="ga_public_size", source="ga", dest="", site="public", source_args="size"),
-           Report(name="ga_adviser_rating", source="ga", dest="", site="advisernet", source_args="rating"),
-           Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
-]
+reports = {
+           "epi_public" : Report(name="epi_public", source="epi", dest="", site="public"),
+           "epi_adviser" : Report(name="epi_adviser", source="epi", dest="", site="advisernet"),
+           "ga_public_rating" : Report(name="ga_public_rating", source="ga", dest="", site="public", source_args="rating"),
+           "ga_public_size" : Report(name="ga_public_size", source="ga", dest="", site="public", source_args="size"),
+           "ga_adviser_rating" : Report(name="ga_adviser_rating", source="ga", dest="", site="advisernet", source_args="rating"),
+           "ga_adviser_size" : Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
+}
+
 
 #take the report source and map it to a function
 sources = {
@@ -39,13 +40,31 @@ def retry_wrap(fn):
 #the uri to set things running
 @app.route('/')
 def go():
-    for r in reports:
+    #for r in reports:
+    #    r.source_fn = sources[r.source]
+    #    retry_wrap(r.get_data())
+    #    r.clean_data()
+    #    #r.save_data()
+    #    retry_wrap(r.send_data())
+    return "try going to /report?report=(name of report)"
+
+
+@app.route('/report')
+def rpt():
+    report = request.args.get('report')
+    if report in reports:
+        r = reports[report]
         r.source_fn = sources[r.source]
         retry_wrap(r.get_data())
         r.clean_data()
-        #r.save_data()
+        r.save_data()
         retry_wrap(r.send_data())
-    return "all done"
+
+        return "done dat"
+
+    else:
+        return "did you the report name right?"
+
 
 
 @app.route('/test')

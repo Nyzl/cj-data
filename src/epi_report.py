@@ -6,10 +6,19 @@ from pathlib import Path
 from google.cloud import storage
 import auth
 
+auth_json = auth.auth("epi")
+username = auth_json['user_name']
+password = auth_json['password']
+details = "username=" + username + "&password=" + password
+edit_login = auth_json['auth_uri'] + details
+
+public = auth_json['public_report']
+advisernet = auth_json['advisernet_report']
+
 def epi_pages_report(site, *args):    
     urls = {
-        "public" : os.environ.get('public_epi'),
-        "advisernet" : os.environ.get('advisernet_epi')
+        "public" : public,
+        "advisernet" : advisernet
     }
 
     url = urls[site]    

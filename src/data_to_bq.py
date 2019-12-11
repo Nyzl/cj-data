@@ -4,7 +4,6 @@ from google.cloud import bigquery
 
 gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset') 
-parentPath = report.parentPath
 
 
 def send_data_bq(frame, name):
