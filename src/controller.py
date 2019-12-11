@@ -8,7 +8,6 @@ import testing
 app = Flask(__name__)
 port = os.environ.get('PORT') 
 
-
 #create all the report objects
 
 reports = [
@@ -26,7 +25,7 @@ sources = {
     "ga":ga_data.get_ga_report
 }
 
-#define key functions
+
 @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000,stop_max_attempt_number=10)
 def retry_wrap(fn):
     try:
@@ -37,25 +36,17 @@ def retry_wrap(fn):
         raise err
 
 
-def get(r):
-    r.source_fn = sources[r.source]
-    retry_wrap(r.get_data())
-
-
-def send(r):
-    retry_wrap(r.send_data())
-
-
-
 #the uri to set things running
 @app.route('/')
 def go():
     for r in reports:
-        get(r)
+        r.source_fn = sources[r.source]
+        retry_wrap(r.get_data())
         r.clean_data()
-        r.save_data()
+        #r.save_data()
         retry_wrap(r.send_data())
     return "all done"
+
 
 @app.route('/test')
 def test():

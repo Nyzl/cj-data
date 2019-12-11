@@ -16,7 +16,6 @@ def epi_pages_report(site, *args):
     frame = makeFrame(url)
     return frame
 
-
 def makeFrame(link):
     auth_json = auth.auth("epi")
     username = auth_json['user_name']

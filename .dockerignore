@@ -1,0 +1,11 @@
+.git
+.cache
+
+**/*.pkl
+**/*.json
+
+*.md
+!README*.md
+README-secret.md
+
+/venv/*

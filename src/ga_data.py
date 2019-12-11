@@ -17,7 +17,6 @@ except:
   print("An exception occurred importing ga_data.py")
 
 
-
 def get_ga_report(view, reporttype):
     logger = logging.getLogger(__name__)
 

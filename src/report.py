@@ -1,4 +1,4 @@
-import os, dotenv
+import sys,os,dotenv
 import pandas as pd
 import pickle
 
@@ -24,9 +24,9 @@ class Report:
             self.data = self.source_fn(self.site, self.source_args)
             self.status = "got"
         except Exception as err:
-            self.status = err
+            self.status = str(err)
         
-        #print(self.status)
+        sys.stdout.write(self.status)
         
     
     def send_data(self):
@@ -34,11 +34,9 @@ class Report:
             data_to_bq.send_data_bq(self.data, self.name)
             self.status = "sent"
         except Exception as err:
-            self.status = err
-            print(err)
+            self.status = str(err)
 
-        #print(self.status)
-        return "sent all the data"
+        sys.stdout.write(self.status)
 
 
     def clean_data(self):
@@ -59,7 +57,3 @@ class Report:
             print("i'm not sure i got the data")
 
 
-
-
-
-print ("hello Ian")

@@ -36,7 +36,7 @@ Build the Docker image with:
 ```docker build -t pipeline .```
 
 Run the docker container, this will start Flask:
-```docker run pipeline```
+```docker run -i -p 8080:8080 --name pipeline```
 
 Flask is listening on port 8080
 
