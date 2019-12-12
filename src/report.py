@@ -25,8 +25,7 @@ class Report:
             self.status = "got"
         except Exception as err:
             self.status = str(err)
-        
-        sys.stdout.write(self.status)
+            print(self.status)
         
     
     def send_data(self):
@@ -35,15 +34,13 @@ class Report:
             self.status = "sent"
         except Exception as err:
             self.status = str(err)
-
-        sys.stdout.write(self.status)
+            print(self.status)
 
 
     def clean_data(self):
         frame = pd.DataFrame(self.data)
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
-        frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
 
         self.data = frame
 
@@ -52,7 +49,6 @@ class Report:
         if self.status == 'got':
             with open(parentPath+"/store/"+self.name+".pkl", 'wb') as file:
                 pickle.dump(self, file)
-            print("i'm going to save this data")
         else:
             print("i'm not sure i got the data")
 

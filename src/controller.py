@@ -1,4 +1,4 @@
-import logging, os
+import logging, os, sys
 from retrying import retry
 from flask import Flask, request
 from report import Report
@@ -19,7 +19,6 @@ reports = {
            "ga_adviser_size" : Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
 }
 
-
 #take the report source and map it to a function
 sources = {
     "epi": epi_report.epi_pages_report,
@@ -34,36 +33,33 @@ def retry_wrap(fn):
 
     except Exception as err:
         logging.error(err)
+        print(str(err))
         raise err
 
 
-#the uri to set things running
 @app.route('/')
-def go():
-    #for r in reports:
-    #    r.source_fn = sources[r.source]
-    #    retry_wrap(r.get_data())
-    #    r.clean_data()
-    #    #r.save_data()
-    #    retry_wrap(r.send_data())
+def home():
     return "try going to /report?report=(name of report)"
 
 
 @app.route('/report')
 def rpt():
-    report = request.args.get('report')
-    if report in reports:
-        r = reports[report]
+    #rt = sys.argv[1]
+    rt = request.args.get('report')
+    if rt in reports:
+        r = reports[rt]
         r.source_fn = sources[r.source]
         retry_wrap(r.get_data())
         r.clean_data()
-        r.save_data()
+        #r.save_data()
         retry_wrap(r.send_data())
 
-        return "done dat"
+        return  "completed " + rt
 
     else:
-        return "did you the report name right?"
+        return "did you get the report name right?"
+
+    return "All done"
 
 
 

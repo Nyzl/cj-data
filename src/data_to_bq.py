@@ -7,18 +7,26 @@ bq_dataset = os.environ.get('bq_dataset')
 
 
 def send_data_bq(frame, name):
-
-    length = frame.shape[0]
     table_id = ".".join([gcp_project,bq_dataset,name])
 
     client = bigquery.Client()
 
     strCols = frame.select_dtypes(include = ['object'])
     frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
-    frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
+
+    schema = []
+    strCols = frame.select_dtypes(include = ['object'])
+    for s in strCols:
+        schema.append(bigquery.SchemaField(s, bigquery.enums.SqlTypeNames.STRING))
+
+    job_config = bigquery.LoadJobConfig(
+        schema=schema,
+        # WRITE_TRUNCATE, WRITE_APPEND, WRITE_EMPTY
+        write_disposition="WRITE_TRUNCATE",
+    )
 
     job = client.load_table_from_dataframe(
-        frame, table_id)
+        frame, table_id, job_config=job_config)
 
     job.result()
 
