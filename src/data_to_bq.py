@@ -1,5 +1,4 @@
-import os,sys
-import report
+import os
 import pandas as pd
 from google.cloud import bigquery
 
@@ -32,5 +31,4 @@ def send_data_bq(frame, name):
     job.result()
 
 if __name__ == '__main__':
-    name = sys.argv[1]
-    send_data(data, name)
+    pass

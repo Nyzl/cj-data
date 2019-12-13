@@ -1,14 +1,13 @@
-import logging, os, sys
+import os
 from retrying import retry
 from flask import Flask, request
 from report import Report
 import epi_report, ga_data
-import testing
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
 
-#create all the report objects
+#  create all the report objects
 
 reports = {
            "epi_public" : Report(name="epi_public", source="epi", dest="", site="public"),
@@ -19,13 +18,13 @@ reports = {
            "ga_adviser_size" : Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
 }
 
-#take the report source and map it to a function
+#  take the report source and map it to a function
 sources = {
     "epi": epi_report.epi_pages_report,
     "ga":ga_data.get_ga_report
 }
 
-
+#  retry wrapper for functions
 @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000,stop_max_attempt_number=10)
 def retry_wrap(fn):
     try:
@@ -36,7 +35,7 @@ def retry_wrap(fn):
         print(str(err))
         raise err
 
-
+#  define endpoints
 @app.route('/')
 def home():
     return "try going to /report?report=(name of report)"
@@ -44,14 +43,12 @@ def home():
 
 @app.route('/report')
 def rpt():
-    #rt = sys.argv[1]
     rt = request.args.get('report')
     if rt in reports:
         r = reports[rt]
         r.source_fn = sources[r.source]
         retry_wrap(r.get_data())
         r.clean_data()
-        #r.save_data()
         retry_wrap(r.send_data())
 
         return  "completed " + rt

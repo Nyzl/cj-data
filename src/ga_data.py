@@ -1,11 +1,9 @@
-# Pulls data from Analytics API
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import os, sys, logging
 import report
 import auth
-
 
 try:
     key_file = auth.auth("cj_data")

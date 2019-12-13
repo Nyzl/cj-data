@@ -1,7 +1,5 @@
-
 import json
 from google.cloud import storage
-
 
 def auth(name):
     bucket_name = "customerjourney_service"
