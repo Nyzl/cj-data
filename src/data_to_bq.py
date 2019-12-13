@@ -1,5 +1,6 @@
 import os,sys
 import report
+import pandas as pd
 from google.cloud import bigquery
 
 gcp_project = os.environ.get('gcp_project')

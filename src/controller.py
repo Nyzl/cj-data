@@ -65,7 +65,7 @@ def rpt():
 
 @app.route('/test')
 def test():
-    return testing.test2()
+    return "test"
 
 
 if __name__ == '__main__':

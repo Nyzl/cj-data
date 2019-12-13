@@ -9,9 +9,9 @@ dotenv.load_dotenv(os.path.join(parentPath, '.env'))
 import data_to_bq
 
 class Report:
-    def __init__(self, name=None, data=None, source=None, site=None, source_args=None, dest=None, status=None, source_fn=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, dest=None, status=None, source_fn=None):
         self.name = name
-        self.data = data
+        self.data = pd.DataFrame()
         self.source = source
         self.site = site
         self.source_args = source_args
@@ -29,6 +29,7 @@ class Report:
         
     
     def send_data(self):
+        print("sending data to bq")
         try:
             data_to_bq.send_data_bq(self.data, self.name)
             self.status = "sent"

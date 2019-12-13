@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.7
 
 LABEL version="1.0"
 LABEL maintainer="Ian Ansell"
@@ -15,6 +15,8 @@ COPY . /cj-data
 WORKDIR /cj-data
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+
 
 RUN chmod 444 src/*.py
 RUN chmod 444 requirements.txt
