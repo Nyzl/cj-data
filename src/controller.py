@@ -1,6 +1,6 @@
-import os
+import os, logging
 from retrying import retry
-from flask import Flask, request
+from flask import Flask, request, render_template
 from report import Report
 import epi_report, ga_data
 
@@ -38,7 +38,7 @@ def retry_wrap(fn):
 #  define endpoints
 @app.route('/')
 def home():
-    return "try going to /report?report=(name of report)"
+    return render_template('index.html', title='Home')
 
 
 @app.route('/report')
