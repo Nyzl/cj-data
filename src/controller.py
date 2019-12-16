@@ -62,7 +62,8 @@ def rpt():
 
 @app.route('/test')
 def test():
-    return "test"
+    # get last upload date
+    return render_template('index.html', title='Home', reports=reports)
 
 
 if __name__ == '__main__':

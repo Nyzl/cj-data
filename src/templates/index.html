@@ -20,10 +20,14 @@
     <div class="c-wrap">
       <h1>Customer Journey data pipeline</h1>
     </div>
+    <div>
+
+        {% for report in reports %}
+        <div><p>{{ report.name }} : <b>{{ report.status }}</b> {{ report.date }} </p></div>
+        {% endfor %}
+    
+    </div>
     </main>
 
-  
-
-    
   </body>
 </html>

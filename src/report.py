@@ -1,6 +1,7 @@
 import sys,os,dotenv
 import pandas as pd
 import pickle
+from datetime import date
 
 path1 = os.path.dirname(os.path.realpath(__file__))
 parentPath = os.path.dirname(path1)
@@ -18,11 +19,13 @@ class Report:
         self.dest = dest
         self.status = status
         self.source_fn = source_fn
+        self.date = ""
 
     def get_data(self):
         try:
             self.data = self.source_fn(self.site, self.source_args)
             self.status = "got"
+            self.date = date.today()
         except Exception as err:
             self.status = str(err)
             print(self.status)
@@ -33,6 +36,7 @@ class Report:
         try:
             data_to_bq.send_data_bq(self.data, self.name)
             self.status = "sent"
+            self.date = date.today()
         except Exception as err:
             self.status = str(err)
             print(self.status)
