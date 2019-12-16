@@ -62,7 +62,7 @@ def rpt():
 
 @app.route('/test')
 def test():
-    # get last upload date
+    # get last upload date direct from BG, and some meta data?
     return render_template('index.html', title='Home', reports=reports)
 
 

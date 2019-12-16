@@ -16,17 +16,21 @@
     </div>
     </header>
     
-    <main>
-    <div class="c-wrap">
-      <h1>Customer Journey data pipeline</h1>
-    </div>
-    <div>
 
-        {% for report in reports %}
-        <div><p>{{ report.name }} : <b>{{ report.status }}</b> {{ report.date }} </p></div>
-        {% endfor %}
-    
-    </div>
+    <div class="main-container">
+    <main>
+      <div class="c-wrap">
+        <h1>Customer Journey data pipeline</h1>
+      </div>
+      <div class="articleContent">
+
+          {% for report in reports %}
+        <div>
+            <p>{{ reports[report].name }} : <b>{{ reports[report].status }}</b> {{ reports[report].date }} </p></div>
+          {% endfor %}
+      
+        </div>
+      </div>
     </main>
 
   </body>
