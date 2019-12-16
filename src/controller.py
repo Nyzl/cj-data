@@ -62,6 +62,7 @@ def rpt():
 
 @app.route('/test')
 def test():
+    reports = reports
     # get last upload date
     return render_template('index.html', title='Home', reports=reports)
 
