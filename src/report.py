@@ -10,7 +10,7 @@ dotenv.load_dotenv(os.path.join(parentPath, '.env'))
 import data_to_bq
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, dest=None, status=None, source_fn=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, dest=None, source_fn=None, status="Initialised", date=date.today()):
         self.name = name
         self.data = pd.DataFrame()
         self.source = source
@@ -19,7 +19,7 @@ class Report:
         self.dest = dest
         self.status = status
         self.source_fn = source_fn
-        self.date = ""
+        self.date = date
 
     def get_data(self):
         try:
