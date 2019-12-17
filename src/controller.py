@@ -3,9 +3,9 @@ from retrying import retry
 from flask import Flask, request, render_template
 import report_list
 
-path1 = os.path.dirname(os.path.realpath(__file__))
-parentPath = os.path.dirname(path1)
-dotenv.load_dotenv(os.path.join(parentPath, '.env'))
+#path1 = os.path.dirname(os.path.realpath(__file__))
+#parentPath = os.path.dirname(path1)
+#dotenv.load_dotenv(os.path.join(parentPath, '.env'))
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -35,7 +35,6 @@ def rpt():
     rt = request.args.get('report')
     if rt in reports:
         r = reports[rt]
-        r.source_fn = sources[r.source]
         retry_wrap(r.get_data())
         r.clean_data()
         retry_wrap(r.send_data())
@@ -53,7 +52,7 @@ def rpt():
 def test():
     for report in reports:
         r = reports[report]
-        r.date = get_upload_date()
+        r.get_upload_date()
     # get last upload date direct from BG, and some meta data?
     return render_template('index.html', title='Home', reports=reports)
 
