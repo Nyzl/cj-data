@@ -2,12 +2,10 @@ import sys,os,dotenv
 import pandas as pd
 import pickle
 from datetime import date
-
-path1 = os.path.dirname(os.path.realpath(__file__))
-parentPath = os.path.dirname(path1)
-dotenv.load_dotenv(os.path.join(parentPath, '.env'))
-
 import data_to_bq
+
+gcp_project = os.environ.get('gcp_project')
+bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
     def __init__(self, name=None, source=None, site=None, source_args=None, dest=None, source_fn=None, status="Initialised", date=date.today()):
@@ -56,5 +54,12 @@ class Report:
                 pickle.dump(self, file)
         else:
             print("i'm not sure i got the data")
+
+    def get_upload_date(self):
+        table_id = ".".join([gcp_project,bq_dataset,self.name])
+        client = bigquery.Client()
+
+        table = client.get_table(table_id)
+        self.date = table.modified
 
 

@@ -1,28 +1,17 @@
 import os, logging
 from retrying import retry
 from flask import Flask, request, render_template
-from report import Report
-import epi_report, ga_data
+import report_list
+
+path1 = os.path.dirname(os.path.realpath(__file__))
+parentPath = os.path.dirname(path1)
+dotenv.load_dotenv(os.path.join(parentPath, '.env'))
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
 
-#  create all the report objects
+reports = report_list.reports
 
-reports = {
-           "epi_public" : Report(name="epi_public", source="epi", dest="", site="public"),
-           "epi_adviser" : Report(name="epi_adviser", source="epi", dest="", site="advisernet"),
-           "ga_public_rating" : Report(name="ga_public_rating", source="ga", dest="", site="public", source_args="rating"),
-           "ga_public_size" : Report(name="ga_public_size", source="ga", dest="", site="public", source_args="size"),
-           "ga_adviser_rating" : Report(name="ga_adviser_rating", source="ga", dest="", site="advisernet", source_args="rating"),
-           "ga_adviser_size" : Report(name="ga_adviser_size", source="ga", dest="", site="advisernet", source_args="size")
-}
-
-#  take the report source and map it to a function
-sources = {
-    "epi": epi_report.epi_pages_report,
-    "ga":ga_data.get_ga_report
-}
 
 #  retry wrapper for functions
 @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000,stop_max_attempt_number=10)
@@ -62,6 +51,9 @@ def rpt():
 
 @app.route('/test')
 def test():
+    for report in reports:
+        r = reports[report]
+        r.date = get_upload_date()
     # get last upload date direct from BG, and some meta data?
     return render_template('index.html', title='Home', reports=reports)
 
