@@ -36,7 +36,7 @@ def rpt():
     if rt in reports:
         r = reports[rt]
         retry_wrap(r.get_data())
-        r.clean_data()
+        retry_wrap(r.clean_data())
         retry_wrap(r.send_data())
 
         return  "completed " + rt
@@ -52,8 +52,7 @@ def rpt():
 def test():
     for report in reports:
         r = reports[report]
-        r.get_upload_date()
-    # get last upload date direct from BG, and some meta data?
+        retry_wrap(r.get_upload_date())
     return render_template('index.html', title='Home', reports=reports)
 
 
