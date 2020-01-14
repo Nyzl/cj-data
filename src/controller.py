@@ -3,10 +3,6 @@ from retrying import retry
 from flask import Flask, request, render_template
 import report_list
 
-#path1 = os.path.dirname(os.path.realpath(__file__))
-#parentPath = os.path.dirname(path1)
-#dotenv.load_dotenv(os.path.join(parentPath, '.env'))
-
 app = Flask(__name__)
 port = os.environ.get('PORT') 
 
@@ -39,7 +35,7 @@ def rpt():
         retry_wrap(r.clean_data())
         retry_wrap(r.send_data())
 
-        return  "completed " + rt
+        return  render_template('report.html', title=rt, report=rt)
 
     else:
         return "did you get the report name right?"
@@ -48,12 +44,12 @@ def rpt():
 
 
 
-@app.route('/test')
+@app.route('/status')
 def test():
     for report in reports:
         r = reports[report]
         retry_wrap(r.get_upload_date())
-    return render_template('index.html', title='Status', reports=reports)
+    return render_template('status.html', title='Status', reports=reports)
 
 
 if __name__ == '__main__':

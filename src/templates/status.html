@@ -3,8 +3,9 @@
 {% block content %}
 
 {% for report in reports %}
-<div><p>{{ report.name }} : <b>{{ report.status }}</b> {{ report.date }} </p></div>
-{% endfor %}
+<div>
+    <p>{{ reports[report].name }} : <b> Uploaded on: </b> {{ reports[report].strDate }} </p></div>
+  {% endfor %}
 
 
 {% endblock %}
