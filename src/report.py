@@ -59,8 +59,10 @@ class Report:
     def get_upload_date(self):
         table_id = ".".join([gcp_project,bq_dataset,self.name])
         client = bigquery.Client()
-
         table = client.get_table(table_id)
-        self.date = table.modified
+        modified = table.modified
+        self.date = modified
+        self.strDate = modified.strftime("%d/%b/%Y, %H:%M:%S")
+
 
 

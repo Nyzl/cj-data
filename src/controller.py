@@ -53,7 +53,7 @@ def test():
     for report in reports:
         r = reports[report]
         retry_wrap(r.get_upload_date())
-    return render_template('index.html', title='Home', reports=reports)
+    return render_template('index.html', title='Status', reports=reports)
 
 
 if __name__ == '__main__':
