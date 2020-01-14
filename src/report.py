@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 from datetime import date
 import data_to_bq
+from google.cloud import bigquery
 
 gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
