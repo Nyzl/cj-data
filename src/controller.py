@@ -5,7 +5,6 @@ import report_list
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
-
 reports = report_list.reports
 
 
@@ -14,7 +13,6 @@ reports = report_list.reports
 def retry_wrap(fn):
     try:
         fn
-
     except Exception as err:
         logging.error(err)
         print(str(err))
@@ -38,7 +36,8 @@ def rpt():
         return  render_template('report.html', title=rt, report=rt)
 
     else:
-        return "did you get the report name right?"
+        error = "did you get the report name right?"
+        return render_template('report.html', title='Error', error=error)
 
     return "All done"
 

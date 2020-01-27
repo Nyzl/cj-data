@@ -7,8 +7,8 @@ def auth(name):
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
-    auth_string = blob.download_as_string().decode('utf8')
-    auth_json = json.loads(auth_string)
+    blob_string = blob.download_as_string().decode('utf8')
+    auth_json = json.loads(blob_string)
 
     return auth_json
 
