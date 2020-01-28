@@ -26,9 +26,9 @@ def home():
 
 @app.route('/report')
 def rpt():
-    rt = request.args.get('report')
-    if rt in reports:
-        r = reports[rt]
+    report = request.args.get('report')
+    if report in reports:
+        r = reports[report]
         retry_wrap(r.get_data())
         retry_wrap(r.clean_data())
         retry_wrap(r.send_data())
