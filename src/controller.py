@@ -33,7 +33,7 @@ def rpt():
         retry_wrap(r.clean_data())
         retry_wrap(r.send_data())
 
-        return  render_template('report.html', title=rt, report=rt)
+        return  render_template('report.html', title=report, report=report)
 
     else:
         error = "did you get the report name right?"
