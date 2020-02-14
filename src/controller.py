@@ -37,7 +37,7 @@ def rpt():
 
     else:
         error = "did you get the report name right?"
-        return render_template('report.html', title='Error', error=error)
+        return render_template('error.html', title='Error', error=error)
 
     return "All done"
 
