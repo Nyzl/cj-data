@@ -26,7 +26,12 @@ def send_data_bq(frame, name):
     )
 
     job = client.load_table_from_dataframe(
-        frame, table_id, job_config=job_config)
+        frame, 
+        table_id, 
+        num_retries=6, 
+        location='EU', 
+        job_config=job_config
+    )
 
     job.result()
 
