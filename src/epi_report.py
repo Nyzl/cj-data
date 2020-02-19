@@ -13,6 +13,9 @@ edit_login = auth_json['auth_uri'] + details
 public = auth_json['public_report']
 advisernet = auth_json['advisernet_report']
 
+feedback30 = "placeholder"
+feedback60 = "placeholder"
+
 def epi_pages_report(site, *args):    
     urls = {
         "public" : public,
@@ -22,6 +25,10 @@ def epi_pages_report(site, *args):
     url = urls[site]    
     frame = makeFrame(url)
     return frame
+
+#def epi_report(site, *args):
+
+
 
 def makeFrame(link):
     auth_json = auth.auth("epi")
@@ -66,6 +73,9 @@ def makeFrame(link):
         frame[strCols.columns] = strCols.apply(lambda x: x.astype('str'))
 
         return frame
+
+
+
 
 if __name__ == '__main__':
     site = sys.argv[1]
