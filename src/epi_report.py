@@ -17,9 +17,9 @@ feedback30 = "placeholder"
 feedback60 = "placeholder"
 
 urls = {
-    "public" : public;
-    "advisernet": advisernet;
-    "feedback30": feedback30;
+    "public" : public,
+    "advisernet": advisernet,
+    "feedback30": feedback30,
     "feedback60": feedback60
 }
 

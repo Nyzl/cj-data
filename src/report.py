@@ -48,7 +48,7 @@ class Report:
         try:
             self.cleaning(frame)
         except AttributeError:
-            continue
+            pass
 
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
