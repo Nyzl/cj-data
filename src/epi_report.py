@@ -42,7 +42,8 @@ def epi_report(site, *args):
 
         return frame
 
-def pages_clean(frame):
+def pages_clean(data):
+    frame = data
     now = datetime.now()
     today = datetime.date(now)
     site = 'https://www.citizensadvice.org.uk'
