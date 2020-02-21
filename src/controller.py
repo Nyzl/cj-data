@@ -30,7 +30,7 @@ def rpt():
     if report in reports:
         r = reports[report]
         retry_wrap(r.get_data())
-        retry_wrap(r.clean_data())
+        r.clean_data()
         retry_wrap(r.send_data())
 
         return  render_template('report.html', title=report, report=report)
