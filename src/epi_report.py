@@ -55,22 +55,22 @@ def pages_clean(data):
         ('cy','/cymraeg')
     ])  
 
-        frame['ReportDate'] = today
-        frame['url'] = frame['Language']
-        frame['url'] = frame['url'].replace(country_code)
-        frame['url'] = site+frame['url']+frame['Path']
-        frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
-        frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
-        frame['ReportDate'] = pd.to_datetime(frame['ReportDate'], errors = 'ignore', yearfirst = True)
-        frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'ignore', dayfirst = True)
-        frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'ignore', dayfirst = True)
-        frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'ignore', dayfirst = True)
-        frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'ignore', dayfirst = True)
-        frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'ignore', dayfirst = True)
+    frame['ReportDate'] = today
+    frame['url'] = frame['Language']
+    frame['url'] = frame['url'].replace(country_code)
+    frame['url'] = site+frame['url']+frame['Path']
+    frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
+    frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
+    frame['ReportDate'] = pd.to_datetime(frame['ReportDate'], errors = 'ignore', yearfirst = True)
+    frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'ignore', dayfirst = True)
+    frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'ignore', dayfirst = True)
+    frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'ignore', dayfirst = True)
+    frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'ignore', dayfirst = True)
+    frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'ignore', dayfirst = True)
 
-        return frame 
+    return frame 
 
 
 if __name__ == '__main__':
     site = sys.argv[1]
-    epi_pages_report(site)
+    epi_report(site)
