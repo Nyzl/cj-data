@@ -9,7 +9,7 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, cleaning=None, data=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, cleaning=None, data=pd.DataFrame()):
         self.name = name
         self.source = source
         self.site = site
@@ -19,7 +19,7 @@ class Report:
         self.cleaning = cleaning
         self.date = date.today()
         self.status = "Initialised"
-        self.data = pd.DataFrame()
+        self.data = data
 
     def get_data(self):
         try:
@@ -43,7 +43,7 @@ class Report:
 
 
     def clean_data(self):
-        frame = pd.DataFrame(self.data)
+        frame = self.data
 
         try:
             self.cleaning(frame)
