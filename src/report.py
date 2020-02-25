@@ -57,12 +57,12 @@ class Report:
         self.data = frame
 
 
-    def save_data(self):
+"""     def save_data(self):
         if self.status == 'got':
             with open(parentPath+"/store/"+self.name+".pkl", 'wb') as file:
                 pickle.dump(self, file)
         else:
-            print("i'm not sure i got the data")
+            print("i'm not sure i got the data") """
 
     def get_upload_date(self):
         table_id = ".".join([gcp_project,bq_dataset,self.name])
