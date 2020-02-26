@@ -9,14 +9,14 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, cleaning=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None):
         self.name = name
         self.source = source
         self.site = site
         self.source_args = source_args
         self.source_fn = source_fn
         self.dest = dest
-        self.cleaning = cleaning
+        #self.cleaning = cleaning
         self.date = date.today()
         self.status = "Initialised"
         self.data = pd.DataFrame()
@@ -44,16 +44,9 @@ class Report:
 
     def clean_data(self):
         frame = self.data
-
-        try:
-            self.cleaning(frame)
-        except AttributeError:
-            pass
-
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
         frame[strCols.columns] = strCols.apply(lambda x: x.astype('str')) 
-
         self.data = frame
 
 
