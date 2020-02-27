@@ -29,6 +29,7 @@ class Report:
         except Exception as err:
             self.status = str(err)
             print(self.status)
+            raise err
         
     
     def send_data(self):
@@ -40,10 +41,22 @@ class Report:
         except Exception as err:
             self.status = str(err)
             print(self.status)
-
+            raise err
 
     def clean_data(self):
         frame = self.data
+
+        try:
+            self.cleaning(frame)
+        except AttributeError as err:
+            pass
+        except Exception as err:
+            self.status = str(err)
+            print(self.status)
+            raise err
+
+
+
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
         frame[strCols.columns] = strCols.apply(lambda x: x.astype('str')) 
