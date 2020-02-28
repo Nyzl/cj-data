@@ -16,7 +16,6 @@ class Report:
         self.source_args = source_args
         self.source_fn = source_fn
         self.dest = dest
-        #self.cleaning = cleaning
         self.date = date.today()
         self.status = "Initialised"
         self.data = pd.DataFrame()
@@ -45,6 +44,11 @@ class Report:
 
     def clean_data(self):
         frame = self.data
+
+        try:
+            self.cleaning(frame)
+        except AttributeError as err:
+            pass
 
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
