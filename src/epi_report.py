@@ -40,35 +40,33 @@ def epi_report(site, *args):
 
         frame = pd.read_csv(sheet)
 
-        return frame
 
-def pages_clean(data):
-    frame = data
-    now = datetime.now()
-    today = datetime.date(now)
-    site = 'https://www.citizensadvice.org.uk'
-    country_code = dict([
-        ('en-GB',''),
-        ('en-SCT','/scotland'),
-        ('en-NIR','/nireland'),
-        ('en-WLS','/wales'),
-        ('cy','/cymraeg')
-    ])  
 
-    frame['ReportDate'] = today
-    frame['url'] = frame['Language']
-    frame['url'] = frame['url'].replace(country_code)
-    frame['url'] = site+frame['url']+frame['Path']
-    frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
-    frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
-    frame['ReportDate'] = pd.to_datetime(frame['ReportDate'], errors = 'ignore', yearfirst = True)
-    frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'ignore', dayfirst = True)
-    frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'ignore', dayfirst = True)
-    frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'ignore', dayfirst = True)
-    frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'ignore', dayfirst = True)
-    frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'ignore', dayfirst = True)
+        now = datetime.now()
+        today = datetime.date(now)
+        site = 'https://www.citizensadvice.org.uk'
+        country_code = dict([
+            ('en-GB',''),
+            ('en-SCT','/scotland'),
+            ('en-NIR','/nireland'),
+            ('en-WLS','/wales'),
+            ('cy','/cymraeg')
+        ])  
 
-    return frame 
+        frame['ReportDate'] = today
+        frame['url'] = frame['Language']
+        frame['url'] = frame['url'].replace(country_code)
+        frame['url'] = site+frame['url']+frame['Path']
+        frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
+        frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
+        frame['ReportDate'] = pd.to_datetime(frame['ReportDate'], errors = 'ignore', yearfirst = True)
+        frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'ignore', dayfirst = True)
+        frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'ignore', dayfirst = True)
+        frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'ignore', dayfirst = True)
+        frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'ignore', dayfirst = True)
+        frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'ignore', dayfirst = True)
+
+        return frame 
 
 
 if __name__ == '__main__':
