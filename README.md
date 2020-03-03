@@ -57,7 +57,7 @@ this bit will explain how it works
 
 ## Authors
 
-* **Ian Ansell** - *Initial work* - [Nyzl](https://github.com/Nyzl)
+**Ian Ansell** - *Initial work* - [Nyzl](https://github.com/Nyzl)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -67,6 +67,6 @@ This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-@MrAlecJohnson for helping with the alpha of this codebase and for being a general sounding board throughout the development.
+[Alec Johnson](https://github.com/MrAlecJohnson) for helping with the alpha of this codebase and for being a general sounding board throughout the development.
 
 
