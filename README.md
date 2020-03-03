@@ -35,6 +35,8 @@ The Dockerfile details all the required environment variables:
 `all_ga` this is used with `ga_data.py` to get GA data for a specific profile
 
 
+The contents of folders `creds` and `store` will not be committed to git or included in the Docker image. The intention is that `creds` can be used to locally store credential files and `store` can be used as a local store for data files.
+
 
 ### Deployment to Google Cloud Run
 
