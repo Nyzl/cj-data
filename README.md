@@ -54,7 +54,7 @@ Deployment is handled via the Makefile:
 
 ## The code
 
-this bit will explain how it works
+this bit will explain how it all works, but it's yet to be written
 
 
 ## Authors
