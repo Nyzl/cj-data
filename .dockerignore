@@ -8,4 +8,8 @@
 !README*.md
 README-secret.md
 
+/docs/*
+/creds/*
+/store/*
+
 /venv/*
