@@ -1,3 +1,5 @@
+# This gets data from Google Analytics api and returns a dataFrame
+
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd

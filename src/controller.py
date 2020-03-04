@@ -1,3 +1,5 @@
+# This is the Flask app which gets the list of reports and handels routing 
+
 import os, logging
 from retrying import retry
 from flask import Flask, request, render_template

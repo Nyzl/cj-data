@@ -1,3 +1,5 @@
+# This gets data from the Trello api
+
 import pandas as pd
 import requests,json
 import auth

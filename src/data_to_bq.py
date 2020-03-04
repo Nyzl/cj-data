@@ -1,3 +1,5 @@
+# This sends a Pandas dataFrame to Big Query
+
 import os
 import pandas as pd
 from google.cloud import bigquery

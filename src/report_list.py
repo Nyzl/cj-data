@@ -1,3 +1,5 @@
+# This is a list of all reports we want to create
+
 from report import Report
 import epi_report, ga_data
 
