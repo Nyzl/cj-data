@@ -21,4 +21,5 @@ ENV all_ga ga:77768373
 
 ENV PORT 8080
 
-CMD python src/controller.py
+#CMD python src/controller.py
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "--chdir src", "app"]
