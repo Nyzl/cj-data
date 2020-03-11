@@ -29,9 +29,6 @@ dev-deploy:
 	--memory 500M \
 	--update-env-vars bq_dataset=cj_data_test
 
-pull:
-	sudo docker pull gcr.io/${dev_project}
-
 local:
 	PORT=8080 && docker run \
 	-p 9090:${PORT} \
@@ -42,3 +39,6 @@ local:
 	-v ${keyfile}:/cj-data/creds/cj_data.json:ro \
 	-e GOOGLE_APPLICATION_CREDENTIALS=/cj-data/creds/cj_data.json \
 	gcr.io/${dev_project}
+
+pull:
+	sudo docker pull gcr.io/${dev_project}
