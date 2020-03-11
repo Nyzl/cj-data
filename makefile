@@ -2,7 +2,7 @@
 .PHONY: build deploy
 
 PORT=8080
-project=/customerjourney-214813/cj-data
+project=customerjourney-214813/cj-data
 dev_project=customerjourney-214813/cj-data-test
 keyfile=/Users/Ian/Documents/GitHub/cj-data/creds/cj_data.json
 
