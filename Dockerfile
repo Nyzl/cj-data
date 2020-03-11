@@ -21,4 +21,9 @@ ENV all_ga ga:77768373
 
 ENV PORT 8080
 
-CMD python src/controller.py
+ENV GUNICORN_CMD_ARGS="--timeout 30 --chdir=./src/"
+
+#WORKDIR /cj-data/src
+
+#CMD python src/controller.py
+CMD ["gunicorn", "controller:app"]
