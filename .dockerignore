@@ -7,9 +7,11 @@
 *.md
 !README*.md
 README-secret.md
+makefile
 
-/docs/*
+.github/*
+.vscode/*
 /creds/*
+/docs/*
 /store/*
-
 /venv/*
