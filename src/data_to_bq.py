@@ -37,5 +37,7 @@ def send_data_bq(frame, name):
 
     job.result()
 
+    return "sent"
+
 if __name__ == '__main__':
     pass
