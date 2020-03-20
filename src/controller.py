@@ -20,6 +20,7 @@ def retry_wrap(fn):
         print(str(err))
         raise err
 
+
 #  define endpoints
 @app.route('/')
 def home():
@@ -28,29 +29,32 @@ def home():
 
 @app.route('/report')
 def rpt():
-    report = request.args.get('report')
-    if report in reports:
-        r = reports[report]
-        retry_wrap(r.get_data())
-        r.clean_data()
-        retry_wrap(r.send_data())
-
-        return  render_template('report.html', title=report, report=report)
-
-    else:
-        error = "did you get the report name right?"
-        return render_template('error.html', title='Error', error=error)
-
-    return "All done"
-
+    try:
+        report = request.args.get('report')
+        if report in reports:
+            r = reports[report]
+            retry_wrap(r.get_data())
+            r.clean_data()
+            retry_wrap(r.send_data())
+            return  render_template('report.html', title=report, report=report)
+        else:
+            err = "did you get the report name right?"
+            return render_template('error.html', title='Error', error=err)
+    except Exception as err:
+        err = str(err)
+        return render_template('error.html', title='Error', error=err)
 
 
 @app.route('/status')
 def test():
-    for report in reports:
-        r = reports[report]
-        retry_wrap(r.get_upload_date())
-    return render_template('status.html', title='Status', reports=reports)
+    try:
+        for report in reports:
+            r = reports[report]
+            retry_wrap(r.get_upload_date())
+        return render_template('status.html', title='Status', reports=reports)
+    except Exception as err:
+        err = str(err)
+        return render_template('error.html', title='Error', error=err)
 
 
 if __name__ == '__main__':
