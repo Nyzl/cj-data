@@ -6,3 +6,18 @@ import pandas as pd
 import os, sys, logging
 import report
 import auth
+
+key_file = auth.auth("cj_data")
+SCOPES = ['https://www.googleapis.com/auth/tagmanager.readonly']
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)
+tag_manager =  build('tagmanager', 'v2', credentials=credentials)
+
+mouseflow = "accounts/1090055821/containers/6311504/workspaces/1000189/variables/74"
+
+
+variable = tag_manager.accounts().containers().workspaces().variables().get(
+      path=mouseflow
+  ).execute()
+
+
+print (variable)

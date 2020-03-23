@@ -15,8 +15,11 @@ and
 
 You will need a Google Cloud account, the Google Cloud SDK and Docker.
 
+## Environments
 
 ### Installing locally
+
+MAke sure you hace gcloud installed and run gcloud auth configure-docker
 
 A step by step series of examples that tell you how to get a development env running
 

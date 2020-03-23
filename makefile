@@ -1,5 +1,5 @@
 
-.PHONY: build deploy
+.PHONY: build deploy local
 
 PORT=8080
 project=customerjourney-214813/cj-data
@@ -41,4 +41,4 @@ local:
 	gcr.io/${dev_project}
 
 pull:
-	sudo docker pull gcr.io/${dev_project}
+	docker pull gcr.io/${dev_project}
