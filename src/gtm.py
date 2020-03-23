@@ -3,7 +3,7 @@
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
-import os, sys, logging
+import os, sys, logging, json
 import report
 import auth
 
@@ -19,5 +19,9 @@ variable = tag_manager.accounts().containers().workspaces().variables().get(
       path=mouseflow
   ).execute()
 
+para_list = variable["parameter"]
+x = next(item for item in para_list if item["key"] == "map")
+y = x["list"]
 
-print (variable)
+
+print (y)
