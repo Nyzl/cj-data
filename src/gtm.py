@@ -36,7 +36,11 @@ def get_gtm(meh, var_id):
 
         frame = frame.append(row,ignore_index = True)
 
+    frame['rate'] = frame['col2'].str.extract('(?<=rate=)(.*?)(?=;|$)', expand=False)
+    frame['owner'] = frame['col2'].str.extract('(?<=owner=)(.*?)(?=;|$)', expand=False)
+    frame['users'] = frame['col2'].str.extract('(?<=users=)(.*?)(?=;|$)', expand=False)
+
     return frame
 
 if __name__ == '__main__':
-    get_gtm("74")
+    get_gtm("meh","74")
