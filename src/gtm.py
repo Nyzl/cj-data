@@ -36,9 +36,9 @@ def get_gtm(meh, var_id):
 
         frame = frame.append(row,ignore_index = True)
 
-    frame['rate'] = frame['col2'].str.extract('(?<=rate=)(.*?)(?=;|$)', expand=False)
-    frame['owner'] = frame['col2'].str.extract('(?<=owner=)(.*?)(?=;|$)', expand=False)
-    frame['users'] = frame['col2'].str.extract('(?<=users=)(.*?)(?=;|$)', expand=False)
+    frame['rate'] = frame['value'].str.extract('(?<=rate=)(.*?)(?=;|$)', expand=False)
+    frame['owner'] = frame['value'].str.extract('(?<=owner=)(.*?)(?=;|$)', expand=False)
+    frame['users'] = frame['value'].str.extract('(?<=users=)(.*?)(?=;|$)', expand=False)
 
     return frame
 
