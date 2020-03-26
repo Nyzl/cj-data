@@ -34,7 +34,6 @@ class Report:
         
     
     def send_data(self):
-        print("sending data to bq")
         try:
             data_to_bq.send_data_bq(self.data, self.name)
             self.status = "sent"
