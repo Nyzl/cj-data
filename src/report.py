@@ -11,7 +11,7 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_args_test=None):
         self.name = name
         self.source = source
         self.site = site
@@ -21,10 +21,12 @@ class Report:
         self.date = date.today()
         self.status = "Initialised"
         self.data = pd.DataFrame()
+        self.source_args_test = source_args_test
 
     def get_data(self):
         try:
             self.data = self.source_fn(self.site, self.source_args)
+            self.data_test = self.source_fn(self.source_args_test)
             self.status = "got"
             self.date = date.today()
         except Exception as err:
