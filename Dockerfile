@@ -19,7 +19,7 @@ ENV public_ga ga:93356290
 ENV all_ga ga:77768373
 ENV PORT 8080
 
-ENV GUNICORN_CMD_ARGS="--timeout 60 --workers 2 --chdir=./src/"
+ENV GUNICORN_CMD_ARGS="--timeout 120 --workers 2 --chdir=./src/"
 
 
 CMD ["gunicorn", "controller:app"]
