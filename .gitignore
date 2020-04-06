@@ -1,7 +1,6 @@
 creds/*.json
 *.json
-store/*.pkl
-*.txt
+store/*.*
 
 src/testing.py
 
