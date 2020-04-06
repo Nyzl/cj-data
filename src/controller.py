@@ -2,7 +2,7 @@
 
 import os, logging
 from retrying import retry
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 import report_list, web_postoffice
 
 app = Flask(__name__)
