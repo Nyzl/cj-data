@@ -46,7 +46,7 @@ def rpt():
 
 
 @app.route('/status')
-def test():
+def status():
     try:
         for report in reports:
             r = reports[report]
@@ -55,6 +55,16 @@ def test():
     except Exception as err:
         err = str(err)
         return render_template('error.html', title='Error', error=err)
+
+@app.route('/postoffice')
+def postoffice():
+    try:
+        web_postoffice.get_data()
+        return  render_template('report.html', title='post office data', report='post office data')
+    except Exception as err:
+        err = str(err)
+        return render_template('error.html', title='Error', error=err)
+
 
 
 if __name__ == '__main__':

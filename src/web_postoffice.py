@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 from multiprocessing import Pool 
 
+import auth, data_to_bq, web_postoffice_test
+
+
 session = requests.Session()
 
 def getPostoffices(site, tableName, classOfPOElement):
@@ -60,7 +63,10 @@ def get_data():
         records = p.map(getTimes, postOffices)
 
     df = pd.DataFrame(records)
-    return df
+    #return df
+
+    data_to_bq.send_data_bq(df,"postoffice")
+    return "done"
 
 if __name__ == '__main__':
     get_data()
