@@ -1,7 +1,7 @@
 # This is a list of all reports we want to create
 
 from report import Report
-import epi_report, ga_data, gtm, search_console
+import epi_report, ga_data, gtm, search_console, web_postoffice
 
 #  create all the report objects
 reports = {
@@ -15,5 +15,6 @@ reports = {
     "gtm_ethnio" : Report(name="gtm_ethnio", source="gtm",source_fn=gtm.get_gtm,dest="",source_args="78"),
     "gtm_hotjar" : Report(name="gtm_hotjar", source="gtm",source_fn=gtm.get_gtm,dest="",source_args="82"),
     "gtm_optimise" : Report(name="gtm_optimise", source="gtm",source_fn=gtm.get_gtm,dest="",source_args="45"),
-    "gsc_corona" : Report(name="gsc_corona", source="gsc",source_fn=search_console.get_search,dest="",source_args="")
+    "gsc_corona" : Report(name="gsc_corona", source="gsc",source_fn=search_console.get_search,dest="",source_args=""),
+    "web_postoffice" : Report(name="web_postoffice", source="web",source_fn=web_postoffice.get_data,dest="",source_args="")
 }
