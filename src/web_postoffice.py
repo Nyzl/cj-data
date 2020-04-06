@@ -45,7 +45,7 @@ def getTimes(office):
 
     return [officename, times_array]
 
-def get_data():
+def get_data(*args):
     """ Create a dataframe containing all the branches along with its opening hours """
     URL = "https://www.postoffice.co.uk/all-locations"
     TABLE_ID = "table_id"  # This is the table that holds all the Post offfice elements
@@ -69,4 +69,4 @@ def get_data():
     return "done"
 
 if __name__ == '__main__':
-    get_data()
+    get_data(x)
