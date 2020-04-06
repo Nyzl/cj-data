@@ -59,7 +59,7 @@ def get_data():
         for row in postOffices:
             output.write(str(row) + '\n')'''
 
-    with Pool(20) as p:
+    with Pool(50) as p:
         records = p.map(getTimes, postOffices)
 
     df = pd.DataFrame(records)
