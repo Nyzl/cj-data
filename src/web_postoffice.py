@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from multiprocessing import Pool 
 
-import auth, data_to_bq, web_postoffice_test
+import auth, data_to_bq
 
 
 session = requests.Session()
