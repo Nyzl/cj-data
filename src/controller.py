@@ -3,7 +3,7 @@
 import os, logging
 from retrying import retry
 from flask import Flask, request, render_template
-import report_list
+import report_list, web_postoffice
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -55,6 +55,13 @@ def test():
     except Exception as err:
         err = str(err)
         return render_template('error.html', title='Error', error=err)
+
+@app.route('/postoffice.csv')
+def postoffice_csv():
+    def generate():
+        for row in web_postoffice.get_data():
+            yield ','.join(row) + '\n'
+    return Response(generate(), mimetype='text/csv')
 
 
 if __name__ == '__main__':
