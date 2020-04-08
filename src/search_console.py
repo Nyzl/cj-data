@@ -21,7 +21,7 @@ def get_search(*args,**kwargs):
 
     request = {
         "startDate": "2020-01-01",
-        "endDate": "2020-03-31",
+        "endDate": "2020-04-30",
         "dimensions": ["query"],
         "searchType": "web",
         "dimensionFilterGroups": [
@@ -47,11 +47,6 @@ def get_search(*args,**kwargs):
     frame['query'] = [' '.join(map(str, l)) for l in frame['keys']]
 
     return frame
-
-
-
-
-
 
 
 if __name__ == '__main__':
