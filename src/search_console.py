@@ -31,7 +31,7 @@ def get_data(*args,**kwargs):
     request = {
         "startDate": "2020-01-01",
         "endDate": "2020-04-30",
-        "dimensions": ["query", "date"],
+        "dimensions": ["query", "device", "page", "date"],
         "searchType": "web",
         "dimensionFilterGroups": [
             {
@@ -45,7 +45,7 @@ def get_data(*args,**kwargs):
                 ]
             }
         ],
-        'rowLimit': 25000,
+        'rowLimit': 25,
         'startRow': 0
     }
 
@@ -53,14 +53,16 @@ def get_data(*args,**kwargs):
     response = search_console.searchanalytics().query(siteUrl=property_uri, body=request).execute()
     rows = response['rows']
 
-    frame = pd.DataFrame(columns=['query', 'date', 'clicks', 'impressions'])
+    frame = pd.DataFrame(columns=['query', 'device', 'page' 'date', 'clicks', 'impressions'])
     for row in rows:
         clicks = row['clicks']
         impressions = row['impressions']
         query = row['keys'][0]
-        date = row['keys'][1]
+        device = row['keys'][1]
+        page = row['keys'][2]
+        date = row['keys'][3]
 
-        frame = frame.append({'query':query, 'date':date, 'clicks':clicks, 'impressions':impressions}, ignore_index=True)
+        frame = frame.append({'query':query, 'device':device, 'page':page, 'date':date, 'clicks':clicks, 'impressions':impressions}, ignore_index=True)
 
     frame = clean(frame)
     
@@ -86,4 +88,5 @@ def clean(frame):
 
 
 if __name__ == '__main__':
-    get_data()
+    frame = get_data()
+    print(frame.head(n=5))
