@@ -16,6 +16,7 @@ nltk.download('punkt')
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 
+pd.options.display.max_colwidth = 1000
 
 def get_data(*args,**kwargs):
     key_file = auth.auth("cj_data")
@@ -30,22 +31,10 @@ def get_data(*args,**kwargs):
 
     request = {
         "startDate": "2020-01-01",
-        "endDate": "2020-04-30",
+        "endDate": "2020-01-01",
         "dimensions": ["query", "device", "page", "date"],
         "searchType": "web",
-        "dimensionFilterGroups": [
-            {
-                "groupType": "and",
-                "filters": [
-                    {
-                        "dimension": "page",
-                        "expression": "coronavirus",
-                        "operator": "contains"
-                    }
-                ]
-            }
-        ],
-        'rowLimit': 25,
+        'rowLimit': 25000,
         'startRow': 0
     }
 
@@ -53,18 +42,19 @@ def get_data(*args,**kwargs):
     response = search_console.searchanalytics().query(siteUrl=property_uri, body=request).execute()
     rows = response['rows']
 
-    frame = pd.DataFrame(columns=['query', 'device', 'page' 'date', 'clicks', 'impressions'])
-    for row in rows:
-        clicks = row['clicks']
-        impressions = row['impressions']
-        query = row['keys'][0]
-        device = row['keys'][1]
-        page = row['keys'][2]
-        date = row['keys'][3]
+    df = pd.DataFrame.from_dict(rows)
+    new_cols = df['keys'].astype(str).str.replace("[","").str.replace("]","")
+    new_cols = new_cols.str.split(pat=',',expand=True,n=3)
+    new_cols.columns = ["query", "device", "page", "date"]
+    new_cols['device'] = new_cols['device'].str.replace("'","").str.lower()
+    new_cols['query'] = new_cols['query'].str.replace("'","")
+    new_cols['page'] = new_cols['page'].str.replace("'","")
+    new_cols['date'] = new_cols['date'].str.replace("'","")
+    new_cols['key'] = df['keys']
+    result = pd.concat([new_cols,df], axis=1, join='inner')
+    result = result.drop(["key","keys"],axis=1)
 
-        frame = frame.append({'query':query, 'device':device, 'page':page, 'date':date, 'clicks':clicks, 'impressions':impressions}, ignore_index=True)
-
-    frame = clean(frame)
+    frame = clean(result)
     
     return frame
 
@@ -89,4 +79,4 @@ def clean(frame):
 
 if __name__ == '__main__':
     frame = get_data()
-    print(frame.head(n=5))
+    print(frame.shape)
