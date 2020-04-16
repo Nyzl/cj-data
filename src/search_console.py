@@ -10,9 +10,9 @@ import auth
 
 #from textblob import TextBlob
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('punkt')
+#nltk.download('stopwords')
+#nltk.download('wordnet')
+#nltk.download('punkt')
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 
