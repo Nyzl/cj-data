@@ -25,9 +25,11 @@ class Report:
         self.send_kwargs = send_kwargs
         self.clean_kwargs = clean_kwargs
 
+
     def get_data(self):
         try:
             self.data = self.source_fn(self.site, self.source_args)
+            #self.data = self.source_fn(**self.source_kwargs)
             self.status = "got"
             self.date = date.today()
         except Exception as err:
@@ -49,7 +51,6 @@ class Report:
 
     def clean_data(self):
         frame = self.data
-
         try:
             self.cleaning(frame)
         except AttributeError as err:
@@ -62,12 +63,16 @@ class Report:
 
 
     def get_upload_date(self):
-        table_id = ".".join([gcp_project,bq_dataset,self.name])
-        client = bigquery.Client()
-        table = client.get_table(table_id)
-        modified = table.modified
-        self.date = modified
-        self.strDate = modified.strftime("%d/%b/%Y, %H:%M:%S")
+        try:
+            table_id = ".".join([gcp_project,bq_dataset,self.name])
+            client = bigquery.Client()
+            table = client.get_table(table_id)
+            modified = table.modified
+            self.date = modified
+            self.strDate = modified.strftime("%d/%b/%Y, %H:%M:%S")
+        except Exception as err:
+            self.strDate = str(err)
+            raise err
 
 
 
