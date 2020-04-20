@@ -8,7 +8,7 @@ import report
 import auth
 
 
-def get_gtm(meh, var_id):
+def get_gtm(meh, var_id, **kwargs):
     key_file = auth.auth("cj_data")
     SCOPES = ['https://www.googleapis.com/auth/tagmanager.readonly']
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)

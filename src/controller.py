@@ -56,6 +56,17 @@ def status():
         err = str(err)
         return render_template('error.html', title='Error', error=err)
 
+@app.route('/status2')
+def status2():
+    try:
+        for report in reports:
+            r = reports[report]
+            retry_wrap(r.get_upload_date())
+        return render_template('status2.html', title='Status', reports=reports)
+    except Exception as err:
+        err = str(err)
+        return render_template('error.html', title='Error', error=err)
+
 @app.route('/postoffice')
 def postoffice():
     try:

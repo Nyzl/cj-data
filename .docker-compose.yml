@@ -1,0 +1,16 @@
+version: '2.0'
+services:
+  web:
+    build: .
+    ports:
+        - "8080:8080"
+    volumes:
+        - .:/cj-data
+    environment:
+        - GOOGLE_APPLICATION_CREDENTIALS=/cj-data/creds/cj_data.json
+    links:
+    - redis
+  redis:
+    image: redis
+volumes:
+  logvolume01: {}

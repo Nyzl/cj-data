@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for report in reports %}
+{% set link = "report?report=" ~ reports[report].name%}
+<div>
+    <p><a href={{link}}>{{ reports[report].name }}</a> : <b> Uploaded on: </b> {{ reports[report].strDate }} </p></div>
+  {% endfor %}
+
+
+{% endblock %}
+
+

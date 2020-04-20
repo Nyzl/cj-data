@@ -11,7 +11,7 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_args_test=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_kwargs=None, send_kwargs=None, clean_kwargs=None):
         self.name = name
         self.source = source
         self.site = site
@@ -21,12 +21,13 @@ class Report:
         self.date = date.today()
         self.status = "Initialised"
         self.data = pd.DataFrame()
-        self.source_args_test = source_args_test
+        self.source_kwargs = source_kwargs
+        self.send_kwargs = send_kwargs
+        self.clean_kwargs = clean_kwargs
 
     def get_data(self):
         try:
             self.data = self.source_fn(self.site, self.source_args)
-            self.data_test = self.source_fn(self.source_args_test)
             self.status = "got"
             self.date = date.today()
         except Exception as err:
@@ -37,8 +38,8 @@ class Report:
     
     def send_data(self):
         try:
-            self.data['report_data'] = pd.to_datetime('now')
-            data_to_bq.send_data_bq(self.data, self.name)
+            self.data['report_date'] = pd.to_datetime('now')
+            data_to_bq.send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
             self.status = "sent"
             self.date = date.today()
         except Exception as err:

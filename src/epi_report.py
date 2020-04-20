@@ -25,7 +25,7 @@ urls = {
     "feedback60": feedback60
 }
 
-def epi_report(site, *args):    
+def epi_report(site, *args, **kwargs):    
     url = urls[site]    
     auth_json = auth.auth("epi")
     username = auth_json['user_name']

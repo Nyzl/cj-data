@@ -42,3 +42,7 @@ local:
 
 pull:
 	docker pull gcr.io/${dev_project}
+
+compose:
+	docker-compose up \ 
+	-e GOOGLE_APPLICATION_CREDENTIALS=/cj-data/creds/cj_data.json
