@@ -4,8 +4,8 @@ import json
 from google.cloud import storage
 
 def auth(name):
-    bucket_name = "customerjourney_service"
-    source_blob_name= name+".json"
+    bucket_name = 'customerjourney_service'
+    source_blob_name= name+'.json'
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
@@ -14,5 +14,5 @@ def auth(name):
 
     return auth_json
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     pass

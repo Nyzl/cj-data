@@ -1,3 +1,5 @@
+#this is junk and should be removed
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup

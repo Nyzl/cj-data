@@ -8,16 +8,19 @@ import report
 import auth
 
 try:
-    key_file = auth.auth("cj_data")
+    key_file = auth.auth('cj_data')
     SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
 
 except:
-  print("An exception occurred importing ga_data.py")
+  print('An exception occurred importing ga_data.py')
 
 
-def get_ga_report(view, reporttype):
+#def get_ga_report(view, reporttype):
+def get_ga_report(**kwargs):
+    view = kwargs['site']
+    reporttype = kwargs['type']
     logger = logging.getLogger(__name__)
 
     VIEW_ID_DICT = {
@@ -126,6 +129,4 @@ def pandafy(response):
 
 # Run the functions in order
 if __name__ == '__main__':
-    view = sys.argv[1]
-    reporttype = sys.argv[2]
-    get_ga_report(view, reporttype)
+    pass

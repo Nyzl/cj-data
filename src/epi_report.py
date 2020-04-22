@@ -6,31 +6,33 @@ from io import StringIO
 from datetime import datetime
 import auth
 
-auth_json = auth.auth("epi")
+auth_json = auth.auth('epi')
 username = auth_json['user_name']
 password = auth_json['password']
-details = "username=" + username + "&password=" + password
+details = 'username=' + username + '&password=' + password
 edit_login = auth_json['auth_uri'] + details
 
 public = auth_json['public_report']
 advisernet = auth_json['advisernet_report']
 
-feedback30 = "placeholder"
-feedback60 = "placeholder"
+feedback30 = 'placeholder'
+feedback60 = 'placeholder'
 
 urls = {
-    "public" : public,
-    "advisernet": advisernet,
-    "feedback30": feedback30,
-    "feedback60": feedback60
+    'public' : public,
+    'advisernet': advisernet,
+    'feedback30': feedback30,
+    'feedback60': feedback60
 }
 
-def epi_report(site, *args, **kwargs):    
+#def epi_report(site, *args, **kwargs): 
+def epi_report(**kwargs):
+    site = kwargs['site']    
     url = urls[site]    
-    auth_json = auth.auth("epi")
+    auth_json = auth.auth('epi')
     username = auth_json['user_name']
     password = auth_json['password']
-    details = "username=" + username + "&password=" + password
+    details = 'username=' + username + '&password=' + password
     edit_login = auth_json['auth_uri'] + details
 
     with requests.Session() as login:
@@ -74,5 +76,4 @@ def pages_clean(frame):
 
 
 if __name__ == '__main__':
-    site = sys.argv[1]
-    epi_report(site)
+    pass

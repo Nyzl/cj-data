@@ -20,7 +20,7 @@ def send_data_bq(frame='none', name='none', **kwargs):
     job_config = bigquery.LoadJobConfig(
         schema=schema,
         # WRITE_TRUNCATE, WRITE_APPEND, WRITE_EMPTY
-        write_disposition="WRITE_TRUNCATE",
+        write_disposition='WRITE_TRUNCATE',
     )
 
     job = client.load_table_from_dataframe(
@@ -33,7 +33,7 @@ def send_data_bq(frame='none', name='none', **kwargs):
 
     job.result()
 
-    return "sent"
+    return 'sent'
 
 if __name__ == '__main__':
     pass

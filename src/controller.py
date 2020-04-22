@@ -38,7 +38,7 @@ def rpt():
             retry_wrap(r.send_data())
             return  render_template('report.html', title=report, report=report)
         else:
-            err = "did you get the report name right?"
+            err = 'did you get the report name right?'
             return render_template('error.html', title='Error', error=err)
     except Exception as err:
         err = str(err)
