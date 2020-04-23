@@ -8,7 +8,7 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset') 
 
 
-def send_data_bq(frame='none', name='none', **kwargs):
+def send_data_bq(frame='none', name='none',writeType='WRITE_TRUNCATE', **kwargs):
     table_id = ".".join([gcp_project,bq_dataset,name])
     client = bigquery.Client()
     
@@ -20,7 +20,7 @@ def send_data_bq(frame='none', name='none', **kwargs):
     job_config = bigquery.LoadJobConfig(
         schema=schema,
         # WRITE_TRUNCATE, WRITE_APPEND, WRITE_EMPTY
-        write_disposition='WRITE_TRUNCATE',
+        write_disposition=writeType,
     )
 
     job = client.load_table_from_dataframe(

@@ -3,7 +3,7 @@
 import os, logging
 from retrying import retry
 from flask import Flask, request, render_template, Response, stream_with_context
-import report_list, web_postoffice
+import report_list, gsc_manual
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
@@ -37,6 +37,11 @@ def rpt():
             r.clean_data()
             retry_wrap(r.send_data())
             return  render_template('report.html', title=report, report=report)
+        elif report == 'manual_gsc':
+            startDate = request.args.get('startDate')
+            endDate = request.args.get('endDate')
+            gsc_manual.manual(startDate=startDate, endDate=endDate)
+            
         else:
             err = 'did you get the report name right?'
             return render_template('error.html', title='Error', error=err)
@@ -63,15 +68,6 @@ def status2():
             r = reports[report]
             retry_wrap(r.get_upload_date())
         return render_template('status2.html', title='Status', reports=reports)
-    except Exception as err:
-        err = str(err)
-        return render_template('error.html', title='Error', error=err)
-
-@app.route('/postoffice')
-def postoffice():
-    try:
-        web_postoffice.get_data()
-        return  render_template('report.html', title='post office data', report='post office data')
     except Exception as err:
         err = str(err)
         return render_template('error.html', title='Error', error=err)

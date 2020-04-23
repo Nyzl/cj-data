@@ -7,16 +7,9 @@ import numpy as np
 import os, sys, logging, string
 import report
 import auth
-
-#from textblob import TextBlob
 import nltk
-#nltk.download('stopwords')
-#nltk.download('wordnet')
-#nltk.download('punkt')
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
-
-pd.options.display.max_colwidth = 1000
 
 def get_data(**kwargs):
     key_file = auth.auth('cj_data')
@@ -28,35 +21,37 @@ def get_data(**kwargs):
     # test request to get a list of sites
     site_list = search_console.sites().list().execute()
 
+    # dates are in the format YYYY-MM-DD
+
+    startDate = kwargs['startDate']
+    endDate = kwargs['endDate']
+    startRow = kwargs['startRow']
+
 
     request = {
-        'startDate': '2020-01-01',
-        'endDate': '2020-01-01',
+        'startDate': startDate,
+        'endDate': endDate,
         'dimensions': ['query', 'device', 'page', 'date'],
         'searchType': 'web',
         'rowLimit': 25000,
-        'startRow': 0
+        'startRow': startRow
     }
 
    
     response = search_console.searchanalytics().query(siteUrl=property_uri, body=request).execute()
-    rows = response['rows']
+    if len(response) > 1:
+        rows = response['rows']
 
-    df = pd.DataFrame.from_dict(rows)
-    new_cols = df['keys'].astype(str).str.replace('[','').str.replace(']','')
-    new_cols = new_cols.str.split(pat=',',expand=True,n=3)
-    new_cols.columns = ['query', 'device', 'page', 'date']
-    new_cols['device'] = new_cols['device'].str.replace("'","").str.lower()
-    new_cols['query'] = new_cols['query'].str.replace("'","")
-    new_cols['page'] = new_cols['page'].str.replace("'","")
-    new_cols['date'] = new_cols['date'].str.replace("'","")
-    new_cols['key'] = df['keys']
-    result = pd.concat([new_cols,df], axis=1, join='inner')
-    result = result.drop(['key','keys'],axis=1)
+        df = pd.DataFrame.from_dict(rows)
+        df[['query','device', 'page', 'date']] = pd.DataFrame(df['keys'].values.tolist(), index= df.index)
+        result = df.drop(['keys'],axis=1)
+        
 
-    frame = clean(result)
+        return result
+    else:
+        pass
+
     
-    return frame
 
 
 def clean(frame): 
@@ -75,6 +70,8 @@ def clean(frame):
     
 
     return frame
+
+
 
 
 if __name__ == '__main__':
