@@ -37,10 +37,11 @@ def rpt():
             r.clean_data()
             retry_wrap(r.send_data())
             return  render_template('report.html', title=report, report=report)
-        elif report == 'manual_gsc':
+        elif report == 'gsc_manual':
             startDate = request.args.get('startDate')
             endDate = request.args.get('endDate')
             gsc_manual.manual(startDate=startDate, endDate=endDate)
+            return  render_template('report.html', title=report, report=report)
             
         else:
             err = 'did you get the report name right?'

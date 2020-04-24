@@ -11,7 +11,7 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_kwargs=None, send_kwargs=None, clean_kwargs=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_kwargs={}, send_kwargs={}, clean_kwargs={}):
         self.name = name
         self.source = source
         self.site = site

@@ -11,6 +11,9 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 
+import datetime
+
+
 def get_data(**kwargs):
     key_file = auth.auth('cj_data')
     SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
@@ -23,9 +26,14 @@ def get_data(**kwargs):
 
     # dates are in the format YYYY-MM-DD
 
-    startDate = kwargs['startDate']
-    endDate = kwargs['endDate']
-    startRow = kwargs['startRow']
+    today = datetime.date.today()
+    date = today - datetime.timedelta(days=2)
+    date = date.strftime('%Y-%m-%d')
+    
+
+    startDate = kwargs.get('startDate',date)
+    endDate = kwargs.get('endDate',date)
+    startRow = kwargs.get('startRow',0)
 
 
     request = {

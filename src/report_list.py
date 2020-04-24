@@ -3,6 +3,7 @@
 from report import Report
 import epi_report, ga_data, gtm, search_console, web_postoffice
 
+
 #  create all the report objects
 reports = {
     'epi_public' : Report(
@@ -63,30 +64,33 @@ reports = {
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'74'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='74'),
+        send_kwargs={}),
     'gtm_ethnio' : Report(
         name='gtm_ethnio', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'78'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='78'),
+        send_kwargs={}),
     'gtm_hotjar' : Report(
         name='gtm_hotjar', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'82'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='82'),
+        send_kwargs={}),
     'gtm_optimise' : Report(
         name='gtm_optimise', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'45'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='45')
+        send_kwargs={}),
+    'gsc_fullsite' : Report(
+        name='gsc_fullsite',
+        source='gsc',
+        source_fn=search_console.get_data,
+        source_kwargs={},
+        clean_kwargs={},
+        send_kwargs={})
 }
