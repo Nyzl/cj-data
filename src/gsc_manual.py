@@ -1,6 +1,7 @@
 # This file is for manually runnign GSC data
 import auth, data_to_bq, search_console
 import sys
+import pandas as pd
 
 def manual(**kwargs):
     startDate = kwargs['startDate']
