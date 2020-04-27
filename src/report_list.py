@@ -92,5 +92,5 @@ reports = {
         source_fn=search_console.get_data,
         source_kwargs={},
         clean_kwargs={},
-        send_kwargs={})
+        send_kwargs={'writeType':'WRITE_APPEND'})
 }

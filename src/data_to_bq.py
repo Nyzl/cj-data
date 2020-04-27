@@ -8,9 +8,10 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset') 
 
 
-def send_data_bq(frame='none', name='none',writeType='WRITE_TRUNCATE', **kwargs):
+def send_data_bq(frame='none', name='none', **kwargs):
     table_id = ".".join([gcp_project,bq_dataset,name])
     client = bigquery.Client()
+    writeType = kwargs.get('writeType','WRITE_TRUNCATE')
     
     schema = []
     strCols = frame.select_dtypes(include = ['object'])

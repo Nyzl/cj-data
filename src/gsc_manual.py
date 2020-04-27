@@ -6,20 +6,25 @@ def manual(**kwargs):
     startDate = kwargs['startDate']
     endDate = kwargs['endDate']
 
-    for x in range(0,500000,25000):
+    #for x in range(0,500000,25000):
+    #    y = search_console.get_data(startDate=startDate,endDate=endDate,startRow=x)
+    #    data_to_bq.send_data_bq(frame=y, name='gsc_fullsite', writeType='WRITE_APPEND')
+    #    if len(y) < 25000:
+    #        break
+    #    else:
+    #        continue
+
+
+    x = 0
+    while True:
         y = search_console.get_data(startDate=startDate,endDate=endDate,startRow=x)
         data_to_bq.send_data_bq(frame=y, name='gsc_fullsite', writeType='WRITE_APPEND')
+        x += 25000
         if len(y) < 25000:
             break
         else:
             continue
 
-def testing (**kwargs): 
-    startDate = kwargs['startDate'] 
-    endDate = kwargs['endDate']
-
-    print ("startDate = " + str(startDate))
-    print ("endDate = " + str(endDate))
 
 if __name__ == '__main__':
     sys.argv[1]
