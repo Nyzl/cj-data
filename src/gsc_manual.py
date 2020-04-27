@@ -17,10 +17,11 @@ def manual(**kwargs):
 
     x = 0
     while True:
-        y = search_console.get_data(startDate=startDate,endDate=endDate,startRow=x)
-        data_to_bq.send_data_bq(frame=y, name='gsc_fullsite', writeType='WRITE_APPEND')
+        frame = search_console.get_data(startDate=startDate,endDate=endDate,startRow=x)
+        frame['report_date'] = pd.to_datetime('today')
+        data_to_bq.send_data_bq(frame=frame, name='gsc_fullsite', writeType='WRITE_APPEND')
         x += 25000
-        if len(y) < 25000:
+        if len(frame) < 25000:
             break
         else:
             continue

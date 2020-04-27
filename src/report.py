@@ -40,7 +40,7 @@ class Report:
     
     def send_data(self):
         try:
-            self.data['report_date'] = pd.to_datetime('now')
+            self.data['report_date'] = pd.to_datetime('today')
             data_to_bq.send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
             self.status = 'sent'
             self.date = date.today()
