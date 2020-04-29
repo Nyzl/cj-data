@@ -1,7 +1,7 @@
 # This is a list of all reports we want to create
 
 from report import Report
-import epi_report, ga_data, gtm, search_console, web_postoffice
+import epi_report, ga_data, gtm, search_console, tokenise
 
 
 #  create all the report objects
@@ -92,5 +92,13 @@ reports = {
         source_fn=search_console.get_data,
         source_kwargs={},
         clean_kwargs={},
+        send_kwargs={'writeType':'WRITE_APPEND'}),
+    'gsc_tokens' : Report(
+        name='gsc_tokens',
+        source='gsc',
+        source_fn=search_console.get_data,
+        clean_fn=tokenise.tokenise,
+        source_kwargs={},
+        clean_kwargs={'col_name':'query'},
         send_kwargs={'writeType':'WRITE_APPEND'})
 }

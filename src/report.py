@@ -11,12 +11,13 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_kwargs={}, send_kwargs={}, clean_kwargs={}):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, clean_fn=None, dest=None, source_kwargs={}, send_kwargs={}, clean_kwargs={}):
         self.name = name
         self.source = source
         self.site = site
         self.source_args = source_args
         self.source_fn = source_fn
+        self.clean_fn = clean_fn
         self.dest = dest
         self.date = date.today()
         self.status = 'Initialised'
@@ -52,9 +53,10 @@ class Report:
     def clean_data(self):
         frame = self.data
         try:
-            self.cleaning(frame)
-            #self.cleaning(frame, **kwargs)
+            frame = self.clean_fn(frame=self.data, **self.clean_kwargs)
         except AttributeError as err:
+            pass
+        except TypeError as err:
             pass
 
         strCols = frame.select_dtypes(include = ['object'])

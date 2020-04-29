@@ -14,7 +14,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import datetime
 
 
-def get_data(**kwargs):
+def search_console(startDate,endDate,startRow):
     key_file = auth.auth('cj_data')
     SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)
@@ -25,17 +25,6 @@ def get_data(**kwargs):
     site_list = search_console.sites().list().execute()
 
     # dates are in the format YYYY-MM-DD
-
-    today = datetime.date.today()
-    date = today - datetime.timedelta(days=2)
-    date = date.strftime('%Y-%m-%d')
-    
-
-    startDate = kwargs.get('startDate',date)
-    endDate = kwargs.get('endDate',date)
-    startRow = kwargs.get('startRow',0)
-
-
     request = {
         'startDate': startDate,
         'endDate': endDate,
@@ -59,7 +48,31 @@ def get_data(**kwargs):
     else:
         pass
 
-    
+
+def get_data(**kwargs):
+    today = datetime.date.today()
+    date = today - datetime.timedelta(days=2)
+    date = date.strftime('%Y-%m-%d')
+
+    startDate = kwargs.get('startDate',date)
+    endDate = kwargs.get('endDate',date)
+    startRow = kwargs.get('startRow',0)
+
+
+    results = pd.DataFrame()
+    startRow = 0
+    while True:
+        frame = search_console(startDate=startDate, endDate=endDate, startRow=startRow)
+        frame['report_date'] = pd.to_datetime('today')
+        results = results.append(frame)
+        #data_to_bq.send_data_bq(frame=frame, name='gsc_fullsite', writeType='WRITE_APPEND')
+        startRow += 25000
+        if len(frame) < 25000:
+            break
+        else:
+            continue
+    return results
+
 
 
 def clean(frame): 
