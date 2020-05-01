@@ -15,7 +15,7 @@ deploy:
 	--platform managed \
 	--image gcr.io/${project} \
 	--service-account cj-datapipeline@customerjourney-214813.iam.gserviceaccount.com \
-	--memory 1000M
+	--memory 2Gi
 
 dev-build:
 	gcloud builds submit \
@@ -26,7 +26,7 @@ dev-deploy:
 	--platform managed \
 	--image gcr.io/${dev_project} \
 	--service-account cj-datapipeline@customerjourney-214813.iam.gserviceaccount.com \
-	--memory 1000M \
+	--memory 2Gi \
 	--update-env-vars bq_dataset=cj_data_test
 
 local:
