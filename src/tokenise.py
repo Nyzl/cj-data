@@ -11,7 +11,8 @@ def tokenise(**kwargs):
     frame[col] = frame[col].apply(lambda x: x.lower())
     frame[col] = frame[col].apply(lambda x: x.translate(string.punctuation))
     frame[col] = frame[col].apply(lambda x: x.translate(string.digits))
-    frame['tokens'] = frame[col].apply(lambda x: x.split(" "))
+    frame['tokens'] = frame[col].apply(nltk.word_tokenize)
+    #frame['tokens'] = frame[col].apply(lambda x: x.split(" "))
     frame = frame.explode('tokens')
 
     stop = set(stopwords.words('english'))
