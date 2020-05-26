@@ -41,8 +41,6 @@ class Report:
     
     def send_data(self):
         try:
-            self.data['report_date'] = pd.to_datetime('today')
-            self.data['report_date'] = self.data['report_date'].dt.date
             data_to_bq.send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
             self.status = 'sent'
             self.date = date.today()
@@ -59,6 +57,10 @@ class Report:
             pass
         except TypeError as err:
             pass
+
+        self.data['report_date'] = pd.to_datetime('today')
+        self.data['report_date'] = self.data['report_date'].dt.date
+        self.data['report_date'] = pd.to_datetime(self.data['report_date'])
 
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))
