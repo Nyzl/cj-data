@@ -12,7 +12,7 @@ reports = {
         source_fn=epi_report.epi_report, 
         source_kwargs={'site':'public'},
         clean_kwargs={},
-        send_kwargs={}, 
+        send_kwargs={'writeType':'WRITE_APPEND'}, 
         site='public'),
     'epi_adviser' : Report(
         name='epi_adviser', 
@@ -20,7 +20,7 @@ reports = {
         source_fn=epi_report.epi_report,
         source_kwargs={'site':'advisernet'}, 
         clean_kwargs={},
-        send_kwargs={}, 
+        send_kwargs={'writeType':'WRITE_APPEND'}, 
         site='advisernet'),
     'ga_public_rating' : Report(
         name='ga_public_rating', 
