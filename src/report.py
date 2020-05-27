@@ -11,12 +11,13 @@ gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
 class Report:
-    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, dest=None, source_kwargs=None, send_kwargs=None, clean_kwargs=None):
+    def __init__(self, name=None, source=None, site=None, source_args=None, source_fn=None, clean_fn=None, dest=None, source_kwargs={}, send_kwargs={}, clean_kwargs={}):
         self.name = name
         self.source = source
         self.site = site
         self.source_args = source_args
         self.source_fn = source_fn
+        self.clean_fn = clean_fn
         self.dest = dest
         self.date = date.today()
         self.status = 'Initialised'
@@ -40,7 +41,6 @@ class Report:
     
     def send_data(self):
         try:
-            self.data['report_date'] = pd.to_datetime('now')
             data_to_bq.send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
             self.status = 'sent'
             self.date = date.today()
@@ -52,10 +52,15 @@ class Report:
     def clean_data(self):
         frame = self.data
         try:
-            self.cleaning(frame)
-            #self.cleaning(frame, **kwargs)
+            frame = self.clean_fn(frame=self.data, **self.clean_kwargs)
         except AttributeError as err:
             pass
+        except TypeError as err:
+            pass
+
+        self.data['report_date'] = pd.to_datetime('today')
+        self.data['report_date'] = self.data['report_date'].dt.date
+        self.data['report_date'] = pd.to_datetime(self.data['report_date'])
 
         strCols = frame.select_dtypes(include = ['object'])
         frame[strCols.columns] = strCols.apply(lambda x: x.str.replace('\n|\r', ' '))

@@ -48,8 +48,6 @@ def epi_report(**kwargs):
 
 
 def pages_clean(frame):
-    now = datetime.now()
-    today = datetime.date(now)
     site = 'https://www.citizensadvice.org.uk'
     country_code = dict([
         ('en-GB',''),
@@ -59,7 +57,6 @@ def pages_clean(frame):
         ('cy','/cymraeg')
     ])  
 
-    frame['ReportDate'] = today
     frame['url'] = frame['Language']
     frame['url'] = frame['url'].replace(country_code)
     frame['url'] = site+frame['url']+frame['Path']

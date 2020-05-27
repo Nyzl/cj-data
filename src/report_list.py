@@ -1,7 +1,8 @@
 # This is a list of all reports we want to create
 
 from report import Report
-import epi_report, ga_data, gtm, search_console, web_postoffice
+import epi_report, ga_data, gtm, search_console, tokenise
+
 
 #  create all the report objects
 reports = {
@@ -11,7 +12,7 @@ reports = {
         source_fn=epi_report.epi_report, 
         source_kwargs={'site':'public'},
         clean_kwargs={},
-        send_kwargs={}, 
+        send_kwargs={'writeType':'WRITE_APPEND'}, 
         site='public'),
     'epi_adviser' : Report(
         name='epi_adviser', 
@@ -19,7 +20,7 @@ reports = {
         source_fn=epi_report.epi_report,
         source_kwargs={'site':'advisernet'}, 
         clean_kwargs={},
-        send_kwargs={}, 
+        send_kwargs={'writeType':'WRITE_APPEND'}, 
         site='advisernet'),
     'ga_public_rating' : Report(
         name='ga_public_rating', 
@@ -63,30 +64,41 @@ reports = {
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'74'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='74'),
+        send_kwargs={}),
     'gtm_ethnio' : Report(
         name='gtm_ethnio', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'78'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='78'),
+        send_kwargs={}),
     'gtm_hotjar' : Report(
         name='gtm_hotjar', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'82'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='82'),
+        send_kwargs={}),
     'gtm_optimise' : Report(
         name='gtm_optimise', 
         source='gtm',
         source_fn=gtm.get_gtm,
         source_kwargs={'variable':'45'},
         clean_kwargs={},
-        send_kwargs={},
-        source_args='45')
+        send_kwargs={}),
+    'gsc_fullsite' : Report(
+        name='gsc_fullsite',
+        source='gsc',
+        source_fn=search_console.get_data,
+        source_kwargs={},
+        clean_kwargs={},
+        send_kwargs={'writeType':'WRITE_APPEND'}),
+    'gsc_tokens' : Report(
+        name='gsc_tokens',
+        source='gsc',
+        source_fn=search_console.get_data,
+        clean_fn=tokenise.tokenise,
+        source_kwargs={},
+        clean_kwargs={'col_name':'query'},
+        send_kwargs={'writeType':'WRITE_APPEND'})
 }
