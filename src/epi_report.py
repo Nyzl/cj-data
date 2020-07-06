@@ -60,14 +60,19 @@ def pages_clean(frame):
     frame['url'] = frame['Language']
     frame['url'] = frame['url'].replace(country_code)
     frame['url'] = site+frame['url']+frame['Path']
-    frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
-    frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
-    frame['ReportDate'] = pd.to_datetime(frame['ReportDate'], errors = 'ignore', yearfirst = True)
-    frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'ignore', dayfirst = True)
-    frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'ignore', dayfirst = True)
-    frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'ignore', dayfirst = True)
-    frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'ignore', dayfirst = True)
-    frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'ignore', dayfirst = True)
+    
+    #frame.loc[frame['LastAccuracyReview'] == '01/01/0001 00:00:00','LastAccuracyReview'] = None
+    # errors = 'coerce', dayfirst = True, format = '%d/%m/%Y'
+    frame['LastAccuracyReview'] = pd.to_datetime(frame['LastAccuracyReview'], errors = 'coerce')
+    
+    #frame.loc[frame['ReviewDate'] == '01/01/0001 00:00:00','ReviewDate'] = None
+    frame['ReviewDate'] = pd.to_datetime(frame['ReviewDate'], errors = 'coerce')
+
+    frame['StopPublish'] = pd.to_datetime(frame['StopPublish'], errors = 'coerce')
+    frame['StartPublish'] = pd.to_datetime(frame['StartPublish'], errors = 'coerce')
+    frame['Changed'] = pd.to_datetime(frame['Changed'], errors = 'coerce')
+    
+    
 
     return frame 
 
