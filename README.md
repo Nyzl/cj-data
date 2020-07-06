@@ -1,10 +1,11 @@
 # Content prioritisation data pipeline
 
-This project collects data from various sources and sends them to Big Query.
+This is a Python project that collects data from various sources and sends them to Big Query.
+A mini data pipeline type of thing.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project. [create an anchor](#deployment-to-google-cloud-run)
 
 Please read if you plan on contributing to the project:
 [Code of conduct for this project](docs/CODE_OF_CONDUCT.md)
@@ -13,15 +14,15 @@ and
 
 ### Prerequisites
 
-You will need a Google Cloud account, the Google Cloud SDK and Docker.
+You will need a Google Cloud account, [Google Cloud SDK](https://cloud.google.com/sdk) and [Docker](https://www.docker.com/).
 
 ## Environments
 
 ### Installing locally
 
-MAke sure you hace gcloud installed and run gcloud auth configure-docker
+Make sure you hace gcloud installed and run `gcloud auth configure-docker`
 
-A step by step series of examples that tell you how to get a development env running
+#### A step by step series of examples that tell you how to get a development env running
 
 Currently there is no local development environment for the project. There is a cloud development environment instead, ensuring credentials are secure at all times. 
 
