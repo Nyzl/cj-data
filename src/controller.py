@@ -17,7 +17,7 @@ def retry_wrap(fn):
         fn
     except Exception as err:
         logging.error(err)
-        print(str(err))
+        #print(str(err))
         raise err
 
 

@@ -17,11 +17,11 @@ except:
   print('An exception occurred importing ga_data.py')
 
 
-#def get_ga_report(view, reporttype):
 def get_ga_report(**kwargs):
     view = kwargs['site']
     reporttype = kwargs['type']
     logger = logging.getLogger(__name__)
+    period = kwargs['period']
 
     VIEW_ID_DICT = {
     'advisernet':os.environ.get('advisernet_ga'),

@@ -55,7 +55,7 @@ Deployment is handled via the Makefile:
 
 `make dev-build` - Builds a development image on Google Container Repository
 
-`make dev-deploy` - Deploys the development image and overwrites the env variable for the BQ dataset
+`make dev-deploy` - Deploys the development image and overwrites the env variable for the BQ dataset to write to test tables rather than writing to the production tables
 
 
 
