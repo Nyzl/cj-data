@@ -3,7 +3,7 @@
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
-import os, sys, logging
+import os, sys, logging, datetime
 import report
 import auth
 
@@ -22,6 +22,9 @@ def get_ga_report(**kwargs):
     reporttype = kwargs['type']
     logger = logging.getLogger(__name__)
     period = kwargs['period']
+    delta = datetime.timedelta(days=period)
+    startDate = datetime.date.today() - delta
+    startDate = str(startDate)
 
     VIEW_ID_DICT = {
     'advisernet':os.environ.get('advisernet_ga'),
@@ -34,7 +37,7 @@ def get_ga_report(**kwargs):
     rating_body = {
         'reportRequests': [{
             'viewId': VIEW_ID,
-            'dateRanges': [{'startDate': '90daysAgo', 'endDate': 'yesterday'}],
+            'dateRanges': [{'startDate': startDate, 'endDate': 'yesterday'}],
             'metrics': [{'expression': 'ga:totalEvents'}],
             'dimensions': [
                 {'name': 'ga:eventLabel'},
@@ -51,7 +54,7 @@ def get_ga_report(**kwargs):
     size_body = {
         'reportRequests': [{
             'viewId': VIEW_ID,
-            'dateRanges': [{'startDate': '90daysAgo', 'endDate': 'yesterday'}],
+            'dateRanges': [{'startDate': startDate, 'endDate': 'yesterday'}],
             'metrics': [{'expression': 'ga:pageviews'}],
             'dimensions': [
                 {'name': 'ga:pagePath'},
