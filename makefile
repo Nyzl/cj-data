@@ -1,10 +1,10 @@
-
 .PHONY: build deploy local
 
 PORT=8080
-project=customerjourney-214813/cj-data
+name=cj-data
+project=customerjourney-214813/${name}
 dev_project=customerjourney-214813/cj-data-test
-keyfile=/Users/Ian/Documents/GitHub/cj-data/creds/cj_data.json
+keyfile=$(PWD)/creds/cj_data.json
 
 build:
 	gcloud builds submit \
@@ -29,7 +29,10 @@ dev-deploy:
 	--memory 2Gi \
 	--update-env-vars bq_dataset=cj_data_test
 
-local:
+local-build:
+	docker build -t ${project} .
+
+local-run:
 	PORT=8080 && docker run \
 	-p 9090:${PORT} \
 	-e PORT=${PORT} \
@@ -38,7 +41,8 @@ local:
 	-e K_REVISION=dev-00001 \
 	-v ${keyfile}:/cj-data/creds/cj_data.json:ro \
 	-e GOOGLE_APPLICATION_CREDENTIALS=/cj-data/creds/cj_data.json \
-	gcr.io/${dev_project}
+	--name ${name} \
+	${project}
 
 pull:
 	docker pull gcr.io/${dev_project}
