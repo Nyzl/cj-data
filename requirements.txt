@@ -41,7 +41,7 @@ oauthlib==3.1.0
 pandas==0.25.3
 pandas-gbq==0.11.0
 post==2019.4.13
-protobuf==3.10.0
+protobuf==3.15.0
 public==2019.4.13
 pyarrow==0.15.1
 pyasn1==0.4.7
