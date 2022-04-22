@@ -4,9 +4,9 @@ import pandas as pd
 import csv,requests,os,sys,json
 from io import StringIO
 from datetime import datetime
-import auth
+from .auth import auth
 
-auth_json = auth.auth('epi')
+auth_json = auth('epi')
 username = auth_json['user_name']
 password = auth_json['password']
 details = 'username=' + username + '&password=' + password

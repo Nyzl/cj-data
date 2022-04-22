@@ -1,12 +1,13 @@
 # This defines the report object
 
-import sys,os,dotenv
+import sys,os
 import pandas as pd
 import pickle
 from datetime import date
-import data_to_bq
-from google.cloud import bigquery
+#from .data_to_bq import send_data_bq
+#from google.cloud import bigquery
 
+send_data_bq = ''
 gcp_project = os.environ.get('gcp_project')
 bq_dataset = os.environ.get('bq_dataset')
 
@@ -41,7 +42,7 @@ class Report:
     
     def send_data(self):
         try:
-            data_to_bq.send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
+            send_data_bq(frame=self.data, name=self.name, **self.send_kwargs)
             self.status = 'sent'
             self.date = date.today()
         except Exception as err:
@@ -71,9 +72,10 @@ class Report:
     def get_upload_date(self):
         try:
             table_id = ".".join([gcp_project,bq_dataset,self.name])
-            client = bigquery.Client()
-            table = client.get_table(table_id)
-            modified = table.modified
+            #client = bigquery.Client()
+            #table = client.get_table(table_id)
+            #modified = table.modified
+            modified = '01/01/2022'
             self.date = modified
             self.strDate = modified.strftime("%d/%b/%Y, %H:%M:%S")
         except Exception as err:

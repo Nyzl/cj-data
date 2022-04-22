@@ -3,11 +3,11 @@
 import os, logging
 from retrying import retry
 from flask import Flask, request, render_template, Response, stream_with_context
-import report_list, gsc_manual
+from src.report_list import reports
 
 app = Flask(__name__)
 port = os.environ.get('PORT') 
-reports = report_list.reports
+#reports = report_list.reports
 
 
 #  retry wrapper for functions
@@ -17,7 +17,6 @@ def retry_wrap(fn):
         fn
     except Exception as err:
         logging.error(err)
-        #print(str(err))
         raise err
 
 
@@ -33,14 +32,14 @@ def rpt():
         report = request.args.get('report')
         if report in reports:
             r = reports[report]
-            retry_wrap(r.get_data())
-            r.clean_data()
-            retry_wrap(r.send_data())
+            #retry_wrap(r.get_data())
+            #r.clean_data()
+            #retry_wrap(r.send_data())
             return  render_template('report.html', title=report, report=report)
         elif report == 'gsc_manual':
             startDate = request.args.get('startDate')
             endDate = request.args.get('endDate')
-            gsc_manual.manual(startDate=startDate, endDate=endDate)
+            #gsc_manual.manual(startDate=startDate, endDate=endDate)
             return  render_template('report.html', title=report, report=report)
             
         else:
@@ -56,7 +55,7 @@ def status():
     try:
         for report in reports:
             r = reports[report]
-            retry_wrap(r.get_upload_date())
+            #retry_wrap(r.get_upload_date())
         return render_template('status.html', title='Status', reports=reports)
     except Exception as err:
         err = str(err)
@@ -67,7 +66,7 @@ def status2():
     try:
         for report in reports:
             r = reports[report]
-            retry_wrap(r.get_upload_date())
+            #retry_wrap(r.get_upload_date())
         return render_template('status2.html', title='Status', reports=reports)
     except Exception as err:
         err = str(err)

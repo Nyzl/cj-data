@@ -5,10 +5,10 @@ from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import os, sys, logging, datetime
 import report
-import auth
+from .auth import auth
 
 try:
-    key_file = auth.auth('cj_data')
+    key_file = auth('cj_data')
     SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(key_file, SCOPES)
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
